@@ -10,14 +10,13 @@
 using namespace std;
 using namespace chrono;
 
-
 //Escopo das Funções
 
 void MainMenu(); // Menu principal do programa para a escolha do metodo de ordenação
 
 void InstancesMenu(); // Menu do programa para a escolha das instancias
 
-void ChoiceMenu(int option); // Menu para exibir o algoritmo escolhido para a ordenação
+void ChoiceMenu(int option); // Menu para exibir o algoritmo que foi escolhido para a ordenação
 
 int ChooseInstance(); // Função para escolher qual instância abrir
 
@@ -141,15 +140,16 @@ int ChooseInstance()
 }
 
 void ReadFile(int vet[], int size, string filename){
-    ifstream arqInput;
+    ifstream arqInput; // variável para ler o arquivo
 
-    arqInput.open(filename);
+    arqInput.open(filename); // recebe a variavel com o nome da instância e abre ela
         
         if(!arqInput.is_open()){
         cerr << "ERRO! Não foi possivel abrir o arquivo.\n";
         arqInput.clear();
         }
 
+        // preenchendo o vetor com os dados lidos do arquivo
         for(int i = 0; i < size; i++){
             arqInput >> vet[i];
         }
@@ -162,23 +162,23 @@ void ReadFile(int vet[], int size, string filename){
 void ReadInstances(int choice, int option){
     system("cls");
     
-    string filename = "";
+    string filename = ""; // variável para guardar o nome da instância
 
     if(choice == 1){
-        int vet[TAM_1000];
+        int vet[TAM_1000]; // criando o vetor de tamanho 1000
 
-        filename = "ListaAleatoria-1000.txt";
+        filename = "ListaAleatoria-1000.txt"; // guardando o nome da instância que ser vai utilizada
 
-        ReadFile(vet, TAM_1000, filename);
+        ReadFile(vet, TAM_1000, filename); // passando os dados para a função ReadFile
 
-        CalculateTime(vet, TAM_1000, option);
+        CalculateTime(vet, TAM_1000, option); // passando os dados para a função CalculateTime
         
         cout << endl << endl;
         system("pause");
     }
 
     if(choice == 2){
-        int vet[TAM_10000];
+        int vet[TAM_10000]; // mesma ideia do primeiro IF, so altera o tamanho do vetor e o nome da instância 
 
         filename = "ListaAleatoria-10000.txt";
 
@@ -189,22 +189,21 @@ void ReadInstances(int choice, int option){
     }
 }
 
-
 void CalculateTime(int Lista[], int size, int option){
     //int comparisons = 0; precisar ser ponteiro talvez
 
     if(option == 1){
-        steady_clock::time_point initialTime = steady_clock::now();
+        steady_clock::time_point initialTime = steady_clock::now(); // guarda o tempo inicial da execução
 
-        BubbleSortMelhorado(Lista, size);
+        BubbleSortMelhorado(Lista, size); // executa a ordenação do vetor com o BubbleSort
 
-        steady_clock::time_point finalTime = steady_clock::now();
+        steady_clock::time_point finalTime = steady_clock::now(); //  guarda o tempo final da execução
 
-        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime);
+        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // calcula o tempo total da execução
+        
+        ImprimiVetor(Lista, size); // imprimi o vetor ordenado
 
-        ImprimiVetor(Lista, size);
-
-        cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl << endl;
+        cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl << endl; // exibe o tempo total da execução
     }  
 }
 

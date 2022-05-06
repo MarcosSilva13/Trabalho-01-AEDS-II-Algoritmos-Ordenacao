@@ -25,9 +25,7 @@ int main()
         case 1:
         choice = ChooseInstance();
         ChoiceMenu(option);
-        ReadInstances(choice, option);
-        //talvez criar uma função ler instancias para cada algoritmo 
-
+        ReadInstances(choice, option); 
 
             break;
         case 2:
