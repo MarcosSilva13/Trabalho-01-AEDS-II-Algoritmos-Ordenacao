@@ -3,9 +3,9 @@
 #include <time.h>
 #include <chrono>
 
-#define TAM1000 1000
-#define TAM10000 10000
-#define TAM100000 100000
+#define TAM_1000 1000
+#define TAM_10000 10000
+#define TAM_100000 100000
 
 using namespace std;
 using namespace chrono;
@@ -19,17 +19,19 @@ void InstancesMenu(); // Menu do programa para a escolha das instancias
 
 void ChoiceMenu(int option); // Menu para exibir o algoritmo escolhido para a ordenação
 
-void CalculateTime(int Lista[], int tamanho, int option); 
+int ChooseInstance(); // Função para escolher qual instância abrir
+
+void ReadFile(string filename, int size); // Função que abre o arquivo da instância escolhida e preenche o vetor
+
+void ReadInstances(int choice, int option); // Função que define a instância escolhida 
+
+void CalculateTime(int Lista[], int size, int option); 
 /* Função que calcula o tempo de execução do algoritmo escolhido e exibe o vetor ordenado,
 o número de comparações, o número de trocas e o tempo de execução.*/
 
-void ImprimiVetor(int Lista[], int tamanho); // Função para imprimir o vetor
+void ImprimiVetor(int Lista[], int size); // Função para imprimir o vetor
 
-void ReadInstances(int choice, int option); // Função que le a instância escolhida ....... 
-
-int ChooseInstance(); // Função para escolher qual instância abrir
-
-void BubbleSortMelhorado(int Lista[], int tamanho); // Função do algoritmo Bubble Sort melhorado
+void BubbleSortMelhorado(int Lista[], int size); // Função do algoritmo Bubble Sort melhorado
 
 //Funções
 
@@ -138,111 +140,89 @@ int ChooseInstance()
     return option;
 }
 
-void ReadInstances(int choice, int option){
-    system("cls");
+void ReadFile(int vet[], int size, string filename){
+    ifstream arqInput;
 
-    ifstream arqEntrada;
-
-    if(choice == 1){
+    arqInput.open(filename);
         
-        int vet[TAM1000];
-        arqEntrada.open("ListaAleatoria-1000.txt");
-        
-        if(!arqEntrada.is_open()){
+        if(!arqInput.is_open()){
         cerr << "ERRO! Não foi possivel abrir o arquivo.\n";
-        arqEntrada.clear();
+        arqInput.clear();
         }
 
-        for(int i = 0; i < TAM1000; i++){
-            arqEntrada >> vet[i];
+        for(int i = 0; i < size; i++){
+            arqInput >> vet[i];
         }
     
-        arqEntrada.close();
+        arqInput.close();
 
-        CalculateTime(vet, TAM1000, option);
+        //ImprimiVetor(vet, size);
+}
+
+void ReadInstances(int choice, int option){
+    system("cls");
+    
+    string filename = "";
+
+    if(choice == 1){
+        int vet[TAM_1000];
+
+        filename = "ListaAleatoria-1000.txt";
+
+        ReadFile(vet, TAM_1000, filename);
+
+        CalculateTime(vet, TAM_1000, option);
         
         cout << endl << endl;
         system("pause");
     }
 
     if(choice == 2){
+        int vet[TAM_10000];
 
-        int vet[TAM10000];
-        arqEntrada.open("ListaAleatoria-10000.txt");
+        filename = "ListaAleatoria-10000.txt";
+
+        ReadFile(vet, TAM_10000, filename);
+
+        CalculateTime(vet, TAM_10000, option);
         
-        if(!arqEntrada.is_open()){
-        cerr << "ERRO! Não foi possivel abrir o arquivo.\n";
-        arqEntrada.clear();
-        }
-
-        for(int i = 0; i < TAM10000; i++){
-            arqEntrada >> vet[i];
-        }
-    
-        arqEntrada.close();
-
-        
-
-        for(int i = 0; i < TAM10000; i++){
-            cout << vet[i] << " ";
-        } 
-    }
-
-    if(choice == 3){
-
-        int vet[TAM100000];
-        arqEntrada.open("ListaAleatoria-100000.txt");
-        
-        if(!arqEntrada.is_open()){
-        cerr << "ERRO! Não foi possivel abrir o arquivo.\n";
-        arqEntrada.clear();
-        }
-
-        for(int i = 0; i < TAM100000; i++){
-            arqEntrada >> vet[i];
-        }
-    
-        arqEntrada.close();
-
-        for(int i = 0; i < TAM100000; i++){
-            cout << vet[i] << " ";
-        } 
     }
 }
 
-void CalculateTime(int Lista[], int tamanho, int option){
+
+void CalculateTime(int Lista[], int size, int option){
     //int comparisons = 0; precisar ser ponteiro talvez
 
     if(option == 1){
         steady_clock::time_point initialTime = steady_clock::now();
 
-        BubbleSortMelhorado(Lista, tamanho);
+        BubbleSortMelhorado(Lista, size);
 
         steady_clock::time_point finalTime = steady_clock::now();
 
         duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime);
 
-        ImprimiVetor(Lista, tamanho);
+        ImprimiVetor(Lista, size);
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl << endl;
     }  
 }
 
-void ImprimiVetor(int Lista[], int tamanho){
-    for(int i = 0; i < tamanho; i++){
+void ImprimiVetor(int Lista[], int size){
+    for(int i = 0; i < size; i++){
         cout << Lista[i] << " ";
     }
 }
 
 // Funções dos Algoritmos 
 
-void BubbleSortMelhorado(int Lista[], int tamanho)
+void BubbleSortMelhorado(int Lista[], int size)
 {
     int aux, troca, numTrocas = 0;
-    for (int i = 0; i < tamanho - 1; i++)
+    for (int i = 0; i < size - 1; i++)
     {
         troca = 0;
-        for (int j = 1; j < tamanho - i; j++)
+        for (int j = 1; j < size - i; j++)
         {
             if (Lista[j] < Lista[j - 1])
             {
