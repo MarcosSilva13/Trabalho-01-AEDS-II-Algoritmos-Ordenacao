@@ -148,7 +148,7 @@ void ChoiceMenu(int option)
 int ChooseInstance()
 {
     int option = 0;
-    
+
     do
     {
         system("cls");
@@ -159,7 +159,7 @@ int ChooseInstance()
         if (option < 1 || option > 13)
         {
             system("cls");
-            cout << "Opcção inválida!" << endl;
+            cout << "Opção inválida!" << endl;
             Sleep(1500);
         }
 

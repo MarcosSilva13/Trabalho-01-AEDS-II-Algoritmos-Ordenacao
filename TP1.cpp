@@ -43,8 +43,13 @@ int main()
         case 6:
             ChoiceMenu(option);
             break;
-        default:
-            break;
+        }
+
+        if(option < 1 || option > 7){
+            system("cls");
+            cout << "Opção inválida!" << endl;
+            Sleep(1500);
+            system("cls");
         }
 
     } while (option != 7);
