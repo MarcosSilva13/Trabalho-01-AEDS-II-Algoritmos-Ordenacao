@@ -1,81 +1,39 @@
 #include <iostream>
 #include <fstream>
+#include <time.h>
+#include <chrono>
 
 #define TAM1000 1000
 #define TAM10000 10000
 #define TAM100000 100000
 
 using namespace std;
+using namespace chrono;
 
-void Menu(); // Menu do programa para a escolha do metodo de ordenação
 
-void MenuInstancias(); // Menu do programa para a escolha das instancias
+//Escopo das Funções
+
+void MainMenu(); // Menu principal do programa para a escolha do metodo de ordenação
+
+void InstancesMenu(); // Menu do programa para a escolha das instancias
+
+void ChoiceMenu(int option); // Menu para exibir o algoritmo escolhido para a ordenação
+
+void CalculateTime(int Lista[], int tamanho, int option); 
+/* Função que calcula o tempo de execução do algoritmo escolhido e exibe o vetor ordenado,
+o número de comparações, o número de trocas e o tempo de execução.*/
+
+void ImprimiVetor(int Lista[], int tamanho); // Função para imprimir o vetor
+
+void ReadInstances(int choice, int option); // Função que le a instância escolhida ....... 
+
+int ChooseInstance(); // Função para escolher qual instância abrir
 
 void BubbleSortMelhorado(int Lista[], int tamanho); // Função do algoritmo Bubble Sort melhorado
 
-void LerInstancias();
+//Funções
 
-void LerInstancias(int escolha){
-    ifstream arqEntrada;
-
-    if(escolha == 1){
-        
-        int vet[TAM1000];
-        arqEntrada.open("ListaAleatoria-1000.txt");
-        
-        if(!arqEntrada.is_open()){
-        cerr << "ERRO! Não foi possivel abrir o arquivo.\n";
-        arqEntrada.clear();
-        }
-
-        for(int i = 0; i < TAM1000; i++){
-            arqEntrada >> vet[i];
-        }
-    
-        arqEntrada.close();
-
-        for(int i = 0; i < TAM1000; i++){
-            cout << vet[i] << " ";
-        } 
-    }
-
-    if(escolha == 2){
-
-        int vet[TAM10000];
-        arqEntrada.open("ListaAleatoria-10000.txt");
-        
-        if(!arqEntrada.is_open()){
-        cerr << "ERRO! Não foi possivel abrir o arquivo.\n";
-        arqEntrada.clear();
-        }
-
-        for(int i = 0; i < TAM10000; i++){
-            arqEntrada >> vet[i];
-        }
-    
-        arqEntrada.close();
-
-        for(int i = 0; i < TAM10000; i++){
-            cout << vet[i] << " ";
-        } 
-    }
-}
-
-
-int EscolhaInstancia();
-
-int EscolhaInstancia()
-{
-    int option = 0;
-        system("cls");
-        MenuInstancias();
-        cout << "Escolha uma opção: ";
-        cin >> option;
-
-    return option;
-}
-
-void Menu()
+void MainMenu()
 {
     system("color 0E");
     cout << "  \n        ������������������������������������������";
@@ -100,7 +58,8 @@ void Menu()
     cout << "  \n        �                                        �";
     cout << "  \n        ������������������������������������������\n\n";
 }
-void MenuInstancias()
+
+void InstancesMenu()
 {
     system("color 0E");
     cout << "  \n        ����������������������������������������������";
@@ -138,6 +97,145 @@ void MenuInstancias()
     cout << "  \n        ����������������������������������������������\n\n";
 }
 
+void ChoiceMenu(int option){
+    system("cls");
+    if(option == 1){
+        cout << "*******************************************\n";
+        cout << "*              BUBBLE SORT                *\n";
+        cout << "*******************************************\n\n";
+        Sleep(1500);
+    } else if(option == 2){
+        cout << "*******************************************\n";
+        cout << "*              SHELL SORT                 *\n";
+        cout << "*******************************************\n\n";
+    } else if(option == 3){
+        cout << "*******************************************\n";
+        cout << "*              SELECTION SORT             *\n";
+        cout << "*******************************************\n\n";
+    }else if(option == 4){
+        cout << "*******************************************\n";
+        cout << "*              INSERTION SORT             *\n";
+        cout << "*******************************************\n\n";
+    } else if(option == 5){
+        cout << "*******************************************\n";
+        cout << "*              QUICK SORT                 *\n";
+        cout << "*******************************************\n\n";
+    } else {
+        cout << "*******************************************\n";
+        cout << "*              MERGE SORT                 *\n";
+        cout << "*******************************************\n\n";
+    }
+}
+
+int ChooseInstance()
+{
+    int option = 0;
+        system("cls");
+        InstancesMenu();
+        cout << "Escolha uma opção: ";
+        cin >> option;
+
+    return option;
+}
+
+void ReadInstances(int choice, int option){
+    system("cls");
+
+    ifstream arqEntrada;
+
+    if(choice == 1){
+        
+        int vet[TAM1000];
+        arqEntrada.open("ListaAleatoria-1000.txt");
+        
+        if(!arqEntrada.is_open()){
+        cerr << "ERRO! Não foi possivel abrir o arquivo.\n";
+        arqEntrada.clear();
+        }
+
+        for(int i = 0; i < TAM1000; i++){
+            arqEntrada >> vet[i];
+        }
+    
+        arqEntrada.close();
+
+        CalculateTime(vet, TAM1000, option);
+        
+        cout << endl << endl;
+        system("pause");
+    }
+
+    if(choice == 2){
+
+        int vet[TAM10000];
+        arqEntrada.open("ListaAleatoria-10000.txt");
+        
+        if(!arqEntrada.is_open()){
+        cerr << "ERRO! Não foi possivel abrir o arquivo.\n";
+        arqEntrada.clear();
+        }
+
+        for(int i = 0; i < TAM10000; i++){
+            arqEntrada >> vet[i];
+        }
+    
+        arqEntrada.close();
+
+        
+
+        for(int i = 0; i < TAM10000; i++){
+            cout << vet[i] << " ";
+        } 
+    }
+
+    if(choice == 3){
+
+        int vet[TAM100000];
+        arqEntrada.open("ListaAleatoria-100000.txt");
+        
+        if(!arqEntrada.is_open()){
+        cerr << "ERRO! Não foi possivel abrir o arquivo.\n";
+        arqEntrada.clear();
+        }
+
+        for(int i = 0; i < TAM100000; i++){
+            arqEntrada >> vet[i];
+        }
+    
+        arqEntrada.close();
+
+        for(int i = 0; i < TAM100000; i++){
+            cout << vet[i] << " ";
+        } 
+    }
+}
+
+void CalculateTime(int Lista[], int tamanho, int option){
+    //int comparisons = 0; precisar ser ponteiro talvez
+
+    if(option == 1){
+        steady_clock::time_point initialTime = steady_clock::now();
+
+        BubbleSortMelhorado(Lista, tamanho);
+
+        steady_clock::time_point finalTime = steady_clock::now();
+
+        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime);
+
+        ImprimiVetor(Lista, tamanho);
+
+        cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl << endl;
+    }  
+}
+
+void ImprimiVetor(int Lista[], int tamanho){
+    for(int i = 0; i < tamanho; i++){
+        cout << Lista[i] << " ";
+    }
+}
+
+// Funções dos Algoritmos 
+
 void BubbleSortMelhorado(int Lista[], int tamanho)
 {
     int aux, troca, numTrocas = 0;
@@ -162,3 +260,4 @@ void BubbleSortMelhorado(int Lista[], int tamanho)
     }
     // return numTrocas;
 }
+
