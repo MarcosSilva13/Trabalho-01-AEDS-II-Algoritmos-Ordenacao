@@ -10,7 +10,7 @@
 using namespace std;
 using namespace chrono;
 
-//Escopo das Funções
+// Escopo das Funções
 
 void MainMenu(); // Menu principal do programa para a escolha do metodo de ordenação
 
@@ -22,9 +22,9 @@ int ChooseInstance(); // Função para escolher qual instância abrir
 
 void ReadFile(string filename, int size); // Função que abre o arquivo da instância escolhida e preenche o vetor
 
-void ReadInstances(int choice, int option); // Função que define a instância escolhida 
+void ReadInstances(int choice, int option); // Função que define a instância escolhida
 
-void CalculateTime(int Lista[], int size, int option); 
+void CalculateTime(int Lista[], int size, int option);
 /* Função que calcula o tempo de execução do algoritmo escolhido e exibe o vetor ordenado,
 o número de comparações, o número de trocas e o tempo de execução.*/
 
@@ -32,7 +32,7 @@ void ImprimiVetor(int Lista[], int size); // Função para imprimir o vetor
 
 void BubbleSortMelhorado(int Lista[], int size); // Função do algoritmo Bubble Sort melhorado
 
-//Funções
+// Funções
 
 void MainMenu()
 {
@@ -98,73 +98,107 @@ void InstancesMenu()
     cout << "  \n        ����������������������������������������������\n\n";
 }
 
-void ChoiceMenu(int option){
+void ChoiceMenu(int option)
+{
     system("cls");
-    if(option == 1){
+    if (option == 1)
+    {
         cout << "*******************************************\n";
         cout << "*              BUBBLE SORT                *\n";
         cout << "*******************************************\n\n";
         Sleep(1500);
-    } else if(option == 2){
+    }
+    else if (option == 2)
+    {
         cout << "*******************************************\n";
         cout << "*              SHELL SORT                 *\n";
         cout << "*******************************************\n\n";
-    } else if(option == 3){
+        Sleep(1500);
+    }
+    else if (option == 3)
+    {
         cout << "*******************************************\n";
         cout << "*              SELECTION SORT             *\n";
         cout << "*******************************************\n\n";
-    }else if(option == 4){
+        Sleep(1500);
+    }
+    else if (option == 4)
+    {
         cout << "*******************************************\n";
         cout << "*              INSERTION SORT             *\n";
         cout << "*******************************************\n\n";
-    } else if(option == 5){
+        Sleep(1500);
+    }
+    else if (option == 5)
+    {
         cout << "*******************************************\n";
         cout << "*              QUICK SORT                 *\n";
         cout << "*******************************************\n\n";
-    } else {
+        Sleep(1500);
+    }
+    else
+    {
         cout << "*******************************************\n";
         cout << "*              MERGE SORT                 *\n";
         cout << "*******************************************\n\n";
+        Sleep(1500);
     }
 }
 
 int ChooseInstance()
 {
     int option = 0;
+    
+    do
+    {
         system("cls");
         InstancesMenu();
         cout << "Escolha uma opção: ";
         cin >> option;
 
+        if (option < 1 || option > 13)
+        {
+            system("cls");
+            cout << "Opcção inválida!" << endl;
+            Sleep(1500);
+        }
+
+    } while (option < 1 || option > 13);
+
     return option;
 }
 
-void ReadFile(int vet[], int size, string filename){
+void ReadFile(int vet[], int size, string filename)
+{
     ifstream arqInput; // variável para ler o arquivo
 
     arqInput.open(filename); // recebe a variavel com o nome da instância e abre ela
-        
-        if(!arqInput.is_open()){
+
+    if (!arqInput.is_open())
+    {
         cerr << "ERRO! Não foi possivel abrir o arquivo.\n";
         arqInput.clear();
-        }
+    }
 
-        // preenchendo o vetor com os dados lidos do arquivo
-        for(int i = 0; i < size; i++){
-            arqInput >> vet[i];
-        }
-    
-        arqInput.close();
+    // preenchendo o vetor com os dados lidos do arquivo
+    for (int i = 0; i < size; i++)
+    {
+        arqInput >> vet[i];
+    }
 
-        //ImprimiVetor(vet, size);
+    arqInput.close();
+
+    // ImprimiVetor(vet, size);
 }
 
-void ReadInstances(int choice, int option){
+void ReadInstances(int choice, int option)
+{
     system("cls");
-    
+
     string filename = ""; // variável para guardar o nome da instância
 
-    if(choice == 1){
+    if (choice == 1)
+    {
         int vet[TAM_1000]; // criando o vetor de tamanho 1000
 
         filename = "ListaAleatoria-1000.txt"; // guardando o nome da instância que ser vai utilizada
@@ -172,27 +206,30 @@ void ReadInstances(int choice, int option){
         ReadFile(vet, TAM_1000, filename); // passando os dados para a função ReadFile
 
         CalculateTime(vet, TAM_1000, option); // passando os dados para a função CalculateTime
-        
-        cout << endl << endl;
+
+        cout << endl
+             << endl;
         system("pause");
     }
 
-    if(choice == 2){
-        int vet[TAM_10000]; // mesma ideia do primeiro IF, so altera o tamanho do vetor e o nome da instância 
+    if (choice == 2)
+    {
+        int vet[TAM_10000]; // mesma ideia do primeiro IF, so altera o tamanho do vetor e o nome da instância
 
         filename = "ListaAleatoria-10000.txt";
 
         ReadFile(vet, TAM_10000, filename);
 
         CalculateTime(vet, TAM_10000, option);
-        
     }
 }
 
-void CalculateTime(int Lista[], int size, int option){
-    //int comparisons = 0; precisar ser ponteiro talvez
+void CalculateTime(int Lista[], int size, int option)
+{
+    // int comparisons = 0; precisar ser ponteiro talvez
 
-    if(option == 1){
+    if (option == 1)
+    {
         steady_clock::time_point initialTime = steady_clock::now(); // guarda o tempo inicial da execução
 
         BubbleSortMelhorado(Lista, size); // executa a ordenação do vetor com o BubbleSort
@@ -200,20 +237,23 @@ void CalculateTime(int Lista[], int size, int option){
         steady_clock::time_point finalTime = steady_clock::now(); //  guarda o tempo final da execução
 
         duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // calcula o tempo total da execução
-        
+
         ImprimiVetor(Lista, size); // imprimi o vetor ordenado
 
-        cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl << endl; // exibe o tempo total da execução
-    }  
+        cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
+             << endl; // exibe o tempo total da execução
+    }
 }
 
-void ImprimiVetor(int Lista[], int size){
-    for(int i = 0; i < size; i++){
+void ImprimiVetor(int Lista[], int size)
+{
+    for (int i = 0; i < size; i++)
+    {
         cout << Lista[i] << " ";
     }
 }
 
-// Funções dos Algoritmos 
+// Funções dos Algoritmos
 
 void BubbleSortMelhorado(int Lista[], int size)
 {
@@ -239,4 +279,3 @@ void BubbleSortMelhorado(int Lista[], int size)
     }
     // return numTrocas;
 }
-
