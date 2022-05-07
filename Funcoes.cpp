@@ -22,7 +22,7 @@ int ChooseInstance(); // Função para escolher qual instância abrir
 
 void ReadFile(string filename, int size); // Função que abre o arquivo da instância escolhida e preenche o vetor
 
-void ReadInstances(int choice, int option); // Função que define a instância escolhida
+void ReadInstances(int choice, int option); // Função que define a instância escolhida e usando ela no algoritmo
 
 void CalculateTime(int Lista[], int size, int option);
 /* Função que calcula o tempo de execução do algoritmo escolhido e exibe o vetor ordenado,
@@ -30,7 +30,7 @@ o número de comparações, o número de trocas e o tempo de execução.*/
 
 void ImprimiVetor(int Lista[], int size); // Função para imprimir o vetor
 
-void BubbleSortMelhorado(int Lista[], int size); // Função do algoritmo Bubble Sort melhorado
+void BubbleSort(int Lista[], int size); // Função do algoritmo Bubble Sort
 
 // Funções
 
@@ -188,7 +188,7 @@ void ReadFile(int vet[], int size, string filename)
 
     arqInput.close();
 
-    // ImprimiVetor(vet, size);
+    // ImprimiVetor(vet, size); REMOVER DEPOIS ERA SO PRA TESTAR 
 }
 
 void ReadInstances(int choice, int option)
@@ -222,6 +222,116 @@ void ReadInstances(int choice, int option)
 
         CalculateTime(vet, TAM_10000, option);
     }
+
+    if (choice == 3)
+    {
+        int vet[TAM_100000];
+        
+        filename = "ListaAleatoria-100000.txt";
+
+        ReadFile(vet, TAM_100000, filename);
+
+        CalculateTime(vet, TAM_100000, option);
+    }
+
+    if (choice == 4)
+    {
+        int vet[TAM_1000];
+
+        filename = "ListaInversamenteOrdenada-1000.txt";
+
+        ReadFile(vet, TAM_1000, filename);
+
+        CalculateTime(vet, TAM_1000, option);
+    }
+
+    if (choice == 5)
+    {
+        int vet[TAM_10000];
+
+        filename = "ListaInversamenteOrdenada-10000.txt";
+
+        ReadFile(vet, TAM_10000, filename);
+
+        CalculateTime(vet, TAM_10000, option);
+    }
+
+    if (choice == 6)
+    {
+        int vet[TAM_100000];
+
+        filename = "ListaInversamenteOrdenada-100000.txt";
+
+        ReadFile(vet, TAM_100000, filename);
+
+        CalculateTime(vet, TAM_100000, option);
+    }
+
+    if (choice == 7)
+    {
+        int vet[TAM_1000];
+
+        filename = "ListaOrdenada-1000.txt";
+
+        ReadFile(vet, TAM_1000, filename);
+
+        CalculateTime(vet, TAM_1000, option);
+    }
+
+    if (choice == 8)
+    {
+        int vet[TAM_10000];
+
+        filename = "ListaOrdenada-10000.txt";
+
+        ReadFile(vet, TAM_10000, filename);
+
+        CalculateTime(vet, TAM_10000, option);
+    }
+
+    if (choice == 9)
+    {
+        int vet[TAM_100000];
+
+        filename = "ListaOrdenada-100000.txt";
+
+        ReadFile(vet, TAM_100000, filename);
+
+        CalculateTime(vet, TAM_100000, option);
+    }
+
+    if (choice == 10)
+    {
+        int vet[TAM_1000];
+
+        filename = "ListaQuaseOrdenada-1000.txt";
+
+        ReadFile(vet, TAM_1000, filename);
+
+        CalculateTime(vet, TAM_1000, option);
+    }
+
+    if (choice == 11)
+    {
+        int vet[TAM_10000];
+
+        filename = "ListaQuaseOrdenada-10000.txt";
+
+        ReadFile(vet, TAM_10000, filename);
+
+        CalculateTime(vet, TAM_10000, option);
+    }
+
+    if (choice == 12)
+    {
+        int vet[TAM_100000];
+
+        filename = "ListaQuaseOrdenada-100000.txt";
+
+        ReadFile(vet, TAM_100000, filename);
+
+        CalculateTime(vet, TAM_100000, option);
+    }
 }
 
 void CalculateTime(int Lista[], int size, int option)
@@ -232,7 +342,7 @@ void CalculateTime(int Lista[], int size, int option)
     {
         steady_clock::time_point initialTime = steady_clock::now(); // guarda o tempo inicial da execução
 
-        BubbleSortMelhorado(Lista, size); // executa a ordenação do vetor com o BubbleSort
+        BubbleSort(Lista, size); // executa a ordenação do vetor com o BubbleSort
 
         steady_clock::time_point finalTime = steady_clock::now(); //  guarda o tempo final da execução
 
@@ -255,7 +365,7 @@ void ImprimiVetor(int Lista[], int size)
 
 // Funções dos Algoritmos
 
-void BubbleSortMelhorado(int Lista[], int size)
+void BubbleSort(int Lista[], int size)
 {
     int aux, troca, numTrocas = 0;
     for (int i = 0; i < size - 1; i++)
