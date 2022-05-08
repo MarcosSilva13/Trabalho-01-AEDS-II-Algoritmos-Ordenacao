@@ -20,7 +20,7 @@ void ChoiceMenu(int option); // Menu para exibir o algoritmo que foi escolhido p
 
 int ChooseInstance(); // Função para escolher qual instância abrir
 
-void ReadFile(string filename, int size); // Função que abre o arquivo da instância escolhida e preenche o vetor
+void ReadFile(string fileName, int size); // Função que abre o arquivo da instância escolhida e preenche o vetor
 
 void ReadInstances(int choice, int option); // Função que define a instância escolhida e usando ela no algoritmo
 
@@ -28,7 +28,7 @@ void CalculateTime(int Lista[], int size, int option);
 /* Função que calcula o tempo de execução do algoritmo escolhido e exibe o vetor ordenado,
 o número de comparações, o número de trocas e o tempo de execução.*/
 
-void ImprimiVetor(int Lista[], int size); // Função para imprimir o vetor
+void ImprimirVetor(int Lista[], int size); // Função para imprimir o vetor
 
 void BubbleSort(int Lista[], int size); // Função do algoritmo Bubble Sort
 
@@ -152,7 +152,9 @@ int ChooseInstance()
     do
     {
         system("cls");
+
         InstancesMenu();
+        
         cout << "Escolha uma opção: ";
         cin >> option;
 
@@ -168,11 +170,11 @@ int ChooseInstance()
     return option;
 }
 
-void ReadFile(int vet[], int size, string filename)
+void ReadFile(int vet[], int size, string fileName)
 {
     ifstream arqInput; // variável para ler o arquivo
 
-    arqInput.open(filename); // recebe a variavel com o nome da instância e abre ela
+    arqInput.open(fileName); // recebe a variavel com o nome da instância e abre ela
 
     if (!arqInput.is_open())
     {
@@ -180,157 +182,191 @@ void ReadFile(int vet[], int size, string filename)
         arqInput.clear();
     }
 
-    // preenchendo o vetor com os dados lidos do arquivo
-    for (int i = 0; i < size; i++)
+    
+    for (int i = 0; i < size; i++) // preenchendo o vetor com os dados lidos do arquivo
     {
         arqInput >> vet[i];
     }
 
     arqInput.close();
-
-    // ImprimiVetor(vet, size); REMOVER DEPOIS ERA SO PRA TESTAR 
 }
 
 void ReadInstances(int choice, int option)
 {
     system("cls");
 
-    string filename = ""; // variável para guardar o nome da instância
+    string fileName = ""; // variável para guardar o nome da instância
+
+    int Lista1k[TAM_1000]; // criando vetor de tamanho 1000 (mil)
+    int Lista10k[TAM_10000]; // criando vetor de tamanho 10000 (dez mil)
+    int Lista100k[TAM_100000]; // criando vetor de tamanho 100000 (cem mil)
 
     if (choice == 1)
     {
-        int vet[TAM_1000]; // criando o vetor de tamanho 1000
+        fileName = "ListaAleatoria-1000.txt"; // guardando o nome da instância que ser vai utilizada
 
-        filename = "ListaAleatoria-1000.txt"; // guardando o nome da instância que ser vai utilizada
+        ReadFile(Lista1k, TAM_1000, fileName); // passando os dados para a função ReadFile
 
-        ReadFile(vet, TAM_1000, filename); // passando os dados para a função ReadFile
-
-        CalculateTime(vet, TAM_1000, option); // passando os dados para a função CalculateTime
+        CalculateTime(Lista1k, TAM_1000, option); // passando os dados para a função CalculateTime
 
         cout << endl
              << endl;
         system("pause");
+        system("cls");
     }
 
-    if (choice == 2)
+    if (choice == 2) // mesma ideia do primeiro IF, so altera o tamanho do vetor e o nome da instância
     {
-        int vet[TAM_10000]; // mesma ideia do primeiro IF, so altera o tamanho do vetor e o nome da instância
+        fileName = "ListaAleatoria-10000.txt";
 
-        filename = "ListaAleatoria-10000.txt";
+        ReadFile(Lista10k, TAM_10000, fileName);
 
-        ReadFile(vet, TAM_10000, filename);
+        CalculateTime(Lista10k, TAM_10000, option);
 
-        CalculateTime(vet, TAM_10000, option);
+        cout << endl
+             << endl;
+        system("pause");
+        system("cls");
     }
 
     if (choice == 3)
     {
-        int vet[TAM_100000];
-        
-        filename = "ListaAleatoria-100000.txt";
+        fileName = "ListaAleatoria-100000.txt";
 
-        ReadFile(vet, TAM_100000, filename);
+        ReadFile(Lista100k, TAM_100000, fileName);
 
-        CalculateTime(vet, TAM_100000, option);
+        CalculateTime(Lista100k, TAM_100000, option);
+
+        cout << endl
+             << endl;
+        system("pause");
+        system("cls");
     }
 
     if (choice == 4)
     {
-        int vet[TAM_1000];
+        fileName = "ListaInversamenteOrdenada-1000.txt";
 
-        filename = "ListaInversamenteOrdenada-1000.txt";
+        ReadFile(Lista1k, TAM_1000, fileName);
 
-        ReadFile(vet, TAM_1000, filename);
+        CalculateTime(Lista1k, TAM_1000, option);
 
-        CalculateTime(vet, TAM_1000, option);
+        cout << endl
+             << endl;
+        system("pause");
+        system("cls");
     }
 
     if (choice == 5)
     {
-        int vet[TAM_10000];
+        fileName = "ListaInversamenteOrdenada-10000.txt";
 
-        filename = "ListaInversamenteOrdenada-10000.txt";
+        ReadFile(Lista10k, TAM_10000, fileName);
 
-        ReadFile(vet, TAM_10000, filename);
+        CalculateTime(Lista10k, TAM_10000, option);
 
-        CalculateTime(vet, TAM_10000, option);
+        cout << endl
+             << endl;
+        system("pause");
+        system("cls");
     }
 
     if (choice == 6)
     {
-        int vet[TAM_100000];
+        fileName = "ListaInversamenteOrdenada-100000.txt";
 
-        filename = "ListaInversamenteOrdenada-100000.txt";
+        ReadFile(Lista100k, TAM_100000, fileName);
 
-        ReadFile(vet, TAM_100000, filename);
+        CalculateTime(Lista100k, TAM_100000, option);
 
-        CalculateTime(vet, TAM_100000, option);
+        cout << endl
+             << endl;
+        system("pause");
+        system("cls");
     }
 
     if (choice == 7)
     {
-        int vet[TAM_1000];
+        fileName = "ListaOrdenada-1000.txt";
 
-        filename = "ListaOrdenada-1000.txt";
+        ReadFile(Lista1k, TAM_1000, fileName);
 
-        ReadFile(vet, TAM_1000, filename);
+        CalculateTime(Lista1k, TAM_1000, option);
 
-        CalculateTime(vet, TAM_1000, option);
+        cout << endl
+             << endl;
+        system("pause");
+        system("cls");
     }
 
     if (choice == 8)
     {
-        int vet[TAM_10000];
+        fileName = "ListaOrdenada-10000.txt";
 
-        filename = "ListaOrdenada-10000.txt";
+        ReadFile(Lista10k, TAM_10000, fileName);
 
-        ReadFile(vet, TAM_10000, filename);
+        CalculateTime(Lista10k, TAM_10000, option);
 
-        CalculateTime(vet, TAM_10000, option);
+        cout << endl
+             << endl;
+        system("pause");
+        system("cls");
     }
 
     if (choice == 9)
     {
-        int vet[TAM_100000];
+        fileName = "ListaOrdenada-100000.txt";
 
-        filename = "ListaOrdenada-100000.txt";
+        ReadFile(Lista100k, TAM_100000, fileName);
 
-        ReadFile(vet, TAM_100000, filename);
+        CalculateTime(Lista100k, TAM_100000, option);
 
-        CalculateTime(vet, TAM_100000, option);
+        cout << endl
+             << endl;
+        system("pause");
+        system("cls");
     }
 
     if (choice == 10)
     {
-        int vet[TAM_1000];
+        fileName = "ListaQuaseOrdenada-1000.txt";
 
-        filename = "ListaQuaseOrdenada-1000.txt";
+        ReadFile(Lista1k, TAM_1000, fileName);
 
-        ReadFile(vet, TAM_1000, filename);
+        CalculateTime(Lista1k, TAM_1000, option);
 
-        CalculateTime(vet, TAM_1000, option);
+        cout << endl
+             << endl;
+        system("pause");
+        system("cls");
     }
 
     if (choice == 11)
     {
-        int vet[TAM_10000];
+        fileName = "ListaQuaseOrdenada-10000.txt";
 
-        filename = "ListaQuaseOrdenada-10000.txt";
+        ReadFile(Lista10k, TAM_10000, fileName);
 
-        ReadFile(vet, TAM_10000, filename);
+        CalculateTime(Lista10k, TAM_10000, option);
 
-        CalculateTime(vet, TAM_10000, option);
+        cout << endl
+             << endl;
+        system("pause");
+        system("cls");
     }
 
     if (choice == 12)
     {
-        int vet[TAM_100000];
+        fileName = "ListaQuaseOrdenada-100000.txt";
 
-        filename = "ListaQuaseOrdenada-100000.txt";
+        ReadFile(Lista100k, TAM_100000, fileName);
 
-        ReadFile(vet, TAM_100000, filename);
+        CalculateTime(Lista100k, TAM_100000, option);
 
-        CalculateTime(vet, TAM_100000, option);
+        cout << endl
+             << endl;
+        system("pause");
+        system("cls");
     }
 }
 
@@ -348,14 +384,14 @@ void CalculateTime(int Lista[], int size, int option)
 
         duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // calcula o tempo total da execução
 
-        ImprimiVetor(Lista, size); // imprimi o vetor ordenado
+        ImprimirVetor(Lista, size); // imprimi o vetor ordenado
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
              << endl; // exibe o tempo total da execução
     }
 }
 
-void ImprimiVetor(int Lista[], int size)
+void ImprimirVetor(int Lista[], int size)
 {
     for (int i = 0; i < size; i++)
     {
