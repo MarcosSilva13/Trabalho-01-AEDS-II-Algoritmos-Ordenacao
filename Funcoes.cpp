@@ -38,6 +38,8 @@ void SelectionSort(int List[], int size); // Função do algoritmo Selection Sor
 
 void InsertionSort(int List[], int size); // Função do algoritmo Insertion Sort
 
+void QuickSort(int List[], int left, int right); // Função do algoritmo Quick Sort
+
 // Funções
 
 void MainMenu()
@@ -411,7 +413,7 @@ void CalculateTime(int List[], int size, int option)
              << endl;
     }
 
-    if(option == 3)
+    if (option == 3)
     {
         steady_clock::time_point initialTime = steady_clock::now();
 
@@ -427,11 +429,27 @@ void CalculateTime(int List[], int size, int option)
              << endl;
     }
 
-    if(option == 4)
+    if (option == 4)
     {
         steady_clock::time_point initialTime = steady_clock::now();
 
         InsertionSort(List, size); // executa a ordenação do vetor com o InsertionSort
+
+        steady_clock::time_point finalTime = steady_clock::now();
+
+        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime);
+
+        ImprimirVetor(List, size);
+
+        cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
+             << endl;
+    }
+
+    if(option == 5)
+    {
+        steady_clock::time_point initialTime = steady_clock::now();
+
+        QuickSort(List, 0, size-1); // executa a ordenação do vetor com o QuickSort
 
         steady_clock::time_point finalTime = steady_clock::now();
 
@@ -483,7 +501,8 @@ void ShellSort(int List[], int size)
 {
     int h, x, i, j;
 
-    for (h = 1; h < size; h = 3 * h + 1);
+    for (h = 1; h < size; h = 3 * h + 1)
+        ;
 
     while (h > 1)
     {
@@ -525,17 +544,48 @@ void SelectionSort(int List[], int size)
     }
 }
 
-void InsertionSort(int List[], int size){
+void InsertionSort(int List[], int size)
+{
     int key, j;
 
-    for(int i = 1; i < size; i++){
+    for (int i = 1; i < size; i++)
+    {
         key = List[i];
         j = i - 1;
 
-        while(j >= 0 && List[j] > key){
+        while (j >= 0 && List[j] > key)
+        {
             List[j + 1] = List[j];
             j--;
         }
         List[j + 1] = key;
     }
+}
+
+void QuickSort(int List[], int left, int right)
+{
+    int temp, i = left, j = right;
+    int pivot = List[(left + right) / 2];
+
+    while (i <= j)
+    {
+        while (List[i] < pivot)
+            i++;
+        while (List[j] > pivot)
+            j--;
+
+        if (i <= j)
+        {
+            temp = List[i];
+            List[i] = List[j];
+            List[j] = temp;
+            i++;
+            j--;
+        }
+    }
+
+    if (left < j)
+        QuickSort(List, left, j);
+    if (i < right)
+        QuickSort(List, i, right);
 }
