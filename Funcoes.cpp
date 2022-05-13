@@ -36,6 +36,8 @@ void ShellSort(int List[], int size); // Função do algoritmo Shell Sort
 
 void SelectionSort(int List[], int size); // Função do algoritmo Selection Sort
 
+void InsertionSort(int List[], int size); // Função do algoritmo Insertion Sort
+
 // Funções
 
 void MainMenu()
@@ -424,6 +426,22 @@ void CalculateTime(int List[], int size, int option)
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
              << endl;
     }
+
+    if(option == 4)
+    {
+        steady_clock::time_point initialTime = steady_clock::now();
+
+        InsertionSort(List, size); // executa a ordenação do vetor com o InsertionSort
+
+        steady_clock::time_point finalTime = steady_clock::now();
+
+        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime);
+
+        ImprimirVetor(List, size);
+
+        cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
+             << endl;
+    }
 }
 
 void ImprimirVetor(int List[], int size)
@@ -504,5 +522,20 @@ void SelectionSort(int List[], int size)
         aux = List[i];
         List[i] = List[min];
         List[min] = aux;
+    }
+}
+
+void InsertionSort(int List[], int size){
+    int key, j;
+
+    for(int i = 1; i < size; i++){
+        key = List[i];
+        j = i - 1;
+
+        while(j >= 0 && List[j] > key){
+            List[j + 1] = List[j];
+            j--;
+        }
+        List[j + 1] = key;
     }
 }
