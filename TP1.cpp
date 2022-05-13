@@ -26,10 +26,11 @@ int main()
             ChoiceMenu(option);
             choice = ChooseInstance();
             ReadInstances(choice, option);
-
             break;
         case 2:
             ChoiceMenu(option);
+            choice = ChooseInstance();
+            ReadInstances(choice, option);
             break;
         case 3:
             ChoiceMenu(option);

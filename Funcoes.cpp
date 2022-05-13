@@ -24,13 +24,15 @@ void ReadFile(string fileName, int size); // Função que abre o arquivo da inst
 
 void ReadInstances(int choice, int option); // Função que define a instância escolhida e usando ela no algoritmo
 
-void CalculateTime(int Lista[], int size, int option);
+void CalculateTime(int List[], int size, int option);
 /* Função que calcula o tempo de execução do algoritmo escolhido e exibe o vetor ordenado,
 o número de comparações, o número de trocas e o tempo de execução.*/
 
-void ImprimirVetor(int Lista[], int size); // Função para imprimir o vetor
+void ImprimirVetor(int List[], int size); // Função para imprimir o vetor
 
-void BubbleSort(int Lista[], int size); // Função do algoritmo Bubble Sort
+void BubbleSort(int List[], int size); // Função do algoritmo Bubble Sort
+
+void ShellSort(int List[], int size); // Função do algoritmo Shell Sort
 
 // Funções
 
@@ -154,7 +156,7 @@ int ChooseInstance()
         system("cls");
 
         InstancesMenu();
-        
+
         cout << "Escolha uma opção: ";
         cin >> option;
 
@@ -182,7 +184,6 @@ void ReadFile(int vet[], int size, string fileName)
         arqInput.clear();
     }
 
-    
     for (int i = 0; i < size; i++) // preenchendo o vetor com os dados lidos do arquivo
     {
         arqInput >> vet[i];
@@ -197,17 +198,17 @@ void ReadInstances(int choice, int option)
 
     string fileName = ""; // variável para guardar o nome da instância
 
-    int Lista1k[TAM_1000]; // criando vetor de tamanho 1000 (mil)
-    int Lista10k[TAM_10000]; // criando vetor de tamanho 10000 (dez mil)
-    int Lista100k[TAM_100000]; // criando vetor de tamanho 100000 (cem mil)
+    int List1k[TAM_1000];     // criando vetor de tamanho 1000 (mil)
+    int List10k[TAM_10000];   // criando vetor de tamanho 10000 (dez mil)
+    int List100k[TAM_100000]; // criando vetor de tamanho 100000 (cem mil)
 
     if (choice == 1)
     {
         fileName = "ListaAleatoria-1000.txt"; // guardando o nome da instância que ser vai utilizada
 
-        ReadFile(Lista1k, TAM_1000, fileName); // passando os dados para a função ReadFile
+        ReadFile(List1k, TAM_1000, fileName); // passando os dados para a função ReadFile
 
-        CalculateTime(Lista1k, TAM_1000, option); // passando os dados para a função CalculateTime
+        CalculateTime(List1k, TAM_1000, option); // passando os dados para a função CalculateTime
 
         cout << endl
              << endl;
@@ -219,9 +220,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaAleatoria-10000.txt";
 
-        ReadFile(Lista10k, TAM_10000, fileName);
+        ReadFile(List10k, TAM_10000, fileName);
 
-        CalculateTime(Lista10k, TAM_10000, option);
+        CalculateTime(List10k, TAM_10000, option);
 
         cout << endl
              << endl;
@@ -233,9 +234,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaAleatoria-100000.txt";
 
-        ReadFile(Lista100k, TAM_100000, fileName);
+        ReadFile(List100k, TAM_100000, fileName);
 
-        CalculateTime(Lista100k, TAM_100000, option);
+        CalculateTime(List100k, TAM_100000, option);
 
         cout << endl
              << endl;
@@ -247,9 +248,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaInversamenteOrdenada-1000.txt";
 
-        ReadFile(Lista1k, TAM_1000, fileName);
+        ReadFile(List1k, TAM_1000, fileName);
 
-        CalculateTime(Lista1k, TAM_1000, option);
+        CalculateTime(List1k, TAM_1000, option);
 
         cout << endl
              << endl;
@@ -261,9 +262,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaInversamenteOrdenada-10000.txt";
 
-        ReadFile(Lista10k, TAM_10000, fileName);
+        ReadFile(List10k, TAM_10000, fileName);
 
-        CalculateTime(Lista10k, TAM_10000, option);
+        CalculateTime(List10k, TAM_10000, option);
 
         cout << endl
              << endl;
@@ -275,9 +276,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaInversamenteOrdenada-100000.txt";
 
-        ReadFile(Lista100k, TAM_100000, fileName);
+        ReadFile(List100k, TAM_100000, fileName);
 
-        CalculateTime(Lista100k, TAM_100000, option);
+        CalculateTime(List100k, TAM_100000, option);
 
         cout << endl
              << endl;
@@ -289,9 +290,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaOrdenada-1000.txt";
 
-        ReadFile(Lista1k, TAM_1000, fileName);
+        ReadFile(List1k, TAM_1000, fileName);
 
-        CalculateTime(Lista1k, TAM_1000, option);
+        CalculateTime(List1k, TAM_1000, option);
 
         cout << endl
              << endl;
@@ -303,9 +304,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaOrdenada-10000.txt";
 
-        ReadFile(Lista10k, TAM_10000, fileName);
+        ReadFile(List10k, TAM_10000, fileName);
 
-        CalculateTime(Lista10k, TAM_10000, option);
+        CalculateTime(List10k, TAM_10000, option);
 
         cout << endl
              << endl;
@@ -317,9 +318,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaOrdenada-100000.txt";
 
-        ReadFile(Lista100k, TAM_100000, fileName);
+        ReadFile(List100k, TAM_100000, fileName);
 
-        CalculateTime(Lista100k, TAM_100000, option);
+        CalculateTime(List100k, TAM_100000, option);
 
         cout << endl
              << endl;
@@ -331,9 +332,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaQuaseOrdenada-1000.txt";
 
-        ReadFile(Lista1k, TAM_1000, fileName);
+        ReadFile(List1k, TAM_1000, fileName);
 
-        CalculateTime(Lista1k, TAM_1000, option);
+        CalculateTime(List1k, TAM_1000, option);
 
         cout << endl
              << endl;
@@ -345,9 +346,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaQuaseOrdenada-10000.txt";
 
-        ReadFile(Lista10k, TAM_10000, fileName);
+        ReadFile(List10k, TAM_10000, fileName);
 
-        CalculateTime(Lista10k, TAM_10000, option);
+        CalculateTime(List10k, TAM_10000, option);
 
         cout << endl
              << endl;
@@ -359,9 +360,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaQuaseOrdenada-100000.txt";
 
-        ReadFile(Lista100k, TAM_100000, fileName);
+        ReadFile(List100k, TAM_100000, fileName);
 
-        CalculateTime(Lista100k, TAM_100000, option);
+        CalculateTime(List100k, TAM_100000, option);
 
         cout << endl
              << endl;
@@ -370,58 +371,101 @@ void ReadInstances(int choice, int option)
     }
 }
 
-void CalculateTime(int Lista[], int size, int option)
+void CalculateTime(int List[], int size, int option)
 {
-    // int comparisons = 0; precisar ser ponteiro talvez
+    // int comparisons = 0; precisar ser ponteiro e ser paramentro nos metodos de ordenar
 
     if (option == 1)
     {
         steady_clock::time_point initialTime = steady_clock::now(); // guarda o tempo inicial da execução
 
-        BubbleSort(Lista, size); // executa a ordenação do vetor com o BubbleSort
+        BubbleSort(List, size); // executa a ordenação do vetor com o BubbleSort
 
         steady_clock::time_point finalTime = steady_clock::now(); //  guarda o tempo final da execução
 
         duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // calcula o tempo total da execução
 
-        ImprimirVetor(Lista, size); // imprimi o vetor ordenado
+        ImprimirVetor(List, size); // imprimi o vetor ordenado
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
              << endl; // exibe o tempo total da execução
     }
+
+    if(option == 2)
+    {
+        steady_clock::time_point initialTime = steady_clock::now();
+
+        ShellSort(List, size); // executa a ordenação do vetor com o ShellSort
+
+        steady_clock::time_point finalTime = steady_clock::now();
+
+        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime);
+
+        ImprimirVetor(List, size);
+
+        cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
+             << endl; 
+        
+    }
 }
 
-void ImprimirVetor(int Lista[], int size)
+void ImprimirVetor(int List[], int size)
 {
     for (int i = 0; i < size; i++)
     {
-        cout << Lista[i] << " ";
+        cout << List[i] << " ";
     }
 }
 
 // Funções dos Algoritmos
 
-void BubbleSort(int Lista[], int size)
+void BubbleSort(int List[], int size)
 {
-    int aux, troca, numTrocas = 0;
+    int aux, chance, numExchanges = 0;
     for (int i = 0; i < size - 1; i++)
     {
-        troca = 0;
+        chance = 0;
         for (int j = 1; j < size - i; j++)
         {
-            if (Lista[j] < Lista[j - 1])
+            if (List[j] < List[j - 1])
             {
-                aux = Lista[j];
-                Lista[j] = Lista[j - 1];
-                Lista[j - 1] = aux;
-                troca = 1;
-                // numTrocas++;
+                aux = List[j];
+                List[j] = List[j - 1];
+                List[j - 1] = aux;
+                chance = 1;
+                // numExchanges++;
             }
         }
-        if (troca == 0)
+        if (chance == 0)
         {
             break;
         }
     }
-    // return numTrocas;
+    // return numExchanges;
+}
+
+void ShellSort(int List[], int size)
+{
+    int h, x, i, j;
+
+    for (h = 1; h < size; h = 3 * h + 1)
+        ;
+
+    while (h > 1)
+    {
+        h = h / 3;
+
+        for (i = h; i < size; i++)
+        {
+            x = List[i];
+            j = i;
+
+            while (j >= h && List[j - h] > x)
+            {
+                List[j] = List[j - h];
+                j = j - h;
+            }
+            List[j] = x;
+        }
+    }
 }
