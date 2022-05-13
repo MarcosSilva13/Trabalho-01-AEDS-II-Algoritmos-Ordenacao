@@ -34,6 +34,8 @@ void BubbleSort(int List[], int size); // Função do algoritmo Bubble Sort
 
 void ShellSort(int List[], int size); // Função do algoritmo Shell Sort
 
+void SelectionSort(int List[], int size); // Função do algoritmo Selection Sort
+
 // Funções
 
 void MainMenu()
@@ -391,7 +393,7 @@ void CalculateTime(int List[], int size, int option)
              << endl; // exibe o tempo total da execução
     }
 
-    if(option == 2)
+    if (option == 2)
     {
         steady_clock::time_point initialTime = steady_clock::now();
 
@@ -404,8 +406,23 @@ void CalculateTime(int List[], int size, int option)
         ImprimirVetor(List, size);
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
-             << endl; 
-        
+             << endl;
+    }
+
+    if(option == 3)
+    {
+        steady_clock::time_point initialTime = steady_clock::now();
+
+        SelectionSort(List, size); // executa a ordenação do vetor com o SelectionSort
+
+        steady_clock::time_point finalTime = steady_clock::now();
+
+        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime);
+
+        ImprimirVetor(List, size);
+
+        cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
+             << endl;
     }
 }
 
@@ -448,8 +465,7 @@ void ShellSort(int List[], int size)
 {
     int h, x, i, j;
 
-    for (h = 1; h < size; h = 3 * h + 1)
-        ;
+    for (h = 1; h < size; h = 3 * h + 1);
 
     while (h > 1)
     {
@@ -467,5 +483,26 @@ void ShellSort(int List[], int size)
             }
             List[j] = x;
         }
+    }
+}
+
+void SelectionSort(int List[], int size)
+{
+    int min, aux, i, j;
+
+    for (i = 0; i < size; i++)
+    {
+        min = i;
+
+        for (j = i + 1; j < size; j++)
+        {
+            if (List[j] < List[min])
+            {
+                min = j;
+            }
+        }
+        aux = List[i];
+        List[i] = List[min];
+        List[min] = aux;
     }
 }

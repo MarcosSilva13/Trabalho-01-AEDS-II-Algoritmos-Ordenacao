@@ -34,6 +34,8 @@ int main()
             break;
         case 3:
             ChoiceMenu(option);
+            choice = ChooseInstance();
+            ReadInstances(choice, option);
             break;
         case 4:
             ChoiceMenu(option);
