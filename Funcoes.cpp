@@ -40,6 +40,10 @@ void InsertionSort(int List[], int size); // Função do algoritmo Insertion Sor
 
 void QuickSort(int List[], int left, int right); // Função do algoritmo Quick Sort
 
+void MergeSort(int List[], int start, int end); // Função do algoritmo Merge Sort
+
+void Intercala(int List[], int start, int mid, int end); // Função que junta os vetores do Merge Sort
+
 // Funções
 
 void MainMenu()
@@ -445,11 +449,27 @@ void CalculateTime(int List[], int size, int option)
              << endl;
     }
 
-    if(option == 5)
+    if (option == 5)
     {
         steady_clock::time_point initialTime = steady_clock::now();
 
-        QuickSort(List, 0, size-1); // executa a ordenação do vetor com o QuickSort
+        QuickSort(List, 0, size - 1); // executa a ordenação do vetor com o QuickSort
+
+        steady_clock::time_point finalTime = steady_clock::now();
+
+        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime);
+
+        ImprimirVetor(List, size);
+
+        cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
+             << endl;
+    }
+
+    if (option == 6)
+    {
+        steady_clock::time_point initialTime = steady_clock::now();
+
+        MergeSort(List, 0, size - 1); // executa a ordenação do vetor com o MergeSort
 
         steady_clock::time_point finalTime = steady_clock::now();
 
@@ -501,8 +521,7 @@ void ShellSort(int List[], int size)
 {
     int h, x, i, j;
 
-    for (h = 1; h < size; h = 3 * h + 1)
-        ;
+    for (h = 1; h < size; h = 3 * h + 1);
 
     while (h > 1)
     {
@@ -588,4 +607,50 @@ void QuickSort(int List[], int left, int right)
         QuickSort(List, left, j);
     if (i < right)
         QuickSort(List, i, right);
+}
+
+void MergeSort(int List[], int start, int end)
+{
+    int mid;
+    if (start < end)
+    {
+        mid = (start + end) / 2;
+        MergeSort(List, start, mid);
+        MergeSort(List, mid + 1, end);
+        Intercala(List, start, mid, end);
+    }
+}
+
+void Intercala(int List[], int start, int mid, int end)
+{
+    int *ListAux = (int *)malloc(sizeof(int) * (end + 1));
+    int i, j;
+
+    for (i = start; i <= mid; i++)
+    {
+        ListAux[i] = List[i];
+    }
+
+    for (j = mid + 1; j <= end; j++)
+    {
+        ListAux[end + mid + 1 - j] = List[j];
+    }
+
+    i = start;
+    j = end;
+
+    for (int k = start; k <= end; k++)
+    {
+        if (ListAux[i] <= ListAux[j])
+        {
+            List[k] = ListAux[i];
+            i++;
+        }
+        else
+        {
+            List[k] = ListAux[j];
+            j--;
+        }
+    }
+    free(ListAux);
 }
