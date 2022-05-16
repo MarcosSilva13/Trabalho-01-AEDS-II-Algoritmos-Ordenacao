@@ -15,6 +15,16 @@ int main()
     do
     {
         MainMenu();
+        /*while((cout << "Escolha uma opção: ") && !(cin >> option)){
+            system("cls");
+            cout << "Valor inserido não é numerico!" << endl;
+            Sleep(1500);
+            cin.clear();
+            cin.ignore();
+            system("cls");
+            MainMenu();
+        }*/
+
         cout << "Escolha uma opção: ";
         cin >> option;
 

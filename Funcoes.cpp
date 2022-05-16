@@ -20,7 +20,7 @@ void ChoiceMenu(int option); // Menu para exibir o algoritmo que foi escolhido p
 
 int ChooseInstance(); // Função para escolher qual instância abrir
 
-void ReadFile(string fileName, int size); // Função que abre o arquivo da instância escolhida e preenche o vetor
+void ReadFile(int List[], int size, string fileName); // Função que abre o arquivo da instância escolhida e preenche o vetor
 
 void ReadInstances(int choice, int option); // Função que define a instância escolhida e usando ela no algoritmo
 
@@ -182,7 +182,7 @@ int ChooseInstance()
     return option;
 }
 
-void ReadFile(int vet[], int size, string fileName)
+void ReadFile(int List[], int size, string fileName)
 {
     ifstream arqInput; // variável para ler o arquivo
 
@@ -196,7 +196,7 @@ void ReadFile(int vet[], int size, string fileName)
 
     for (int i = 0; i < size; i++) // preenchendo o vetor com os dados lidos do arquivo
     {
-        arqInput >> vet[i];
+        arqInput >> List[i];
     }
 
     arqInput.close();
