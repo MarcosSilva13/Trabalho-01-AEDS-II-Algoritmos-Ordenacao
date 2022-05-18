@@ -48,7 +48,7 @@ void Intercala(int List[], int start, int mid, int end); // Função que junta o
 
 void MainMenu()
 {
-    system("color 0E");
+    system("color 03");
     cout << "  \n        ������������������������������������������";
     cout << "  \n        �                                        �";
     cout << "  \n        �          ALGORITMOS ORDENAÇÃO          �";
@@ -74,7 +74,7 @@ void MainMenu()
 
 void InstancesMenu()
 {
-    system("color 0E");
+    system("color 03");
     cout << "  \n        ����������������������������������������������";
     cout << "  \n        �                                            �";
     cout << "  \n        �                 INSTÂNCIAS                 �";
