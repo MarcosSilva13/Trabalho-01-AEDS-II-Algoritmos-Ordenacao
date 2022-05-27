@@ -39,7 +39,7 @@ void ShellSort(int List[], int size, long long int *comparisons, unsigned long l
 
 void SelectionSort(int List[], int size, long long int *comparisons, unsigned long long *numExchanges); // Função do algoritmo Selection Sort
 
-void InsertionSort(int List[], int size); // Função do algoritmo Insertion Sort
+void InsertionSort(int List[], int size, long long int *comparisons, unsigned long long *numExchanges); // Função do algoritmo Insertion Sort
 
 void QuickSort(int List[], int left, int right); // Função do algoritmo Quick Sort
 
@@ -493,18 +493,28 @@ void CalculateTime(int List[], int size, int option, string fileName)
 
     if (option == 4)
     {
-        steady_clock::time_point initialTime = steady_clock::now();
+        methodName = "InsertionSort"; // guardando nome do metodo
 
-        InsertionSort(List, size); // executa a ordenação do vetor com o InsertionSort
+        steady_clock::time_point initialTime = steady_clock::now(); // guarda o tempo inicial da execução
 
-        steady_clock::time_point finalTime = steady_clock::now();
+        InsertionSort(List, size, &comparisons, &numExchanges); // executa a ordenação do vetor com o InsertionSort
 
-        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime);
+        steady_clock::time_point finalTime = steady_clock::now(); //  guarda o tempo final da execução
 
-        PrintVector(List, size);
+        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // calcula o tempo total da execução
+
+        PrintVector(List, size); // imprimi o vetor ordenado
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
-             << endl;
+             << endl; // exibe o tempo total da execução
+
+        cout << "Número de trocas: " << numExchanges << endl
+             << endl; // exibe o número de trocas total
+
+        cout << "Número de comparações: " << comparisons << endl
+             << endl; // exibe o número de comparações totais
+
+        //SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 5)
@@ -641,7 +651,7 @@ void SelectionSort(int List[], int size, long long int *comparisons, unsigned lo
     }
 }
 
-void InsertionSort(int List[], int size)
+void InsertionSort(int List[], int size, long long int *comparisons, unsigned long long *numExchanges)
 {
     int key, j;
 
@@ -650,12 +660,18 @@ void InsertionSort(int List[], int size)
         key = List[i];
         j = i - 1;
 
+        (*comparisons)++;
+
         while (j >= 0 && List[j] > key)
-        {
+        {   
+            (*comparisons)++;
+
             List[j + 1] = List[j];
             j--;
         }
         List[j + 1] = key;
+
+        (*numExchanges)++;
     }
 }
 
