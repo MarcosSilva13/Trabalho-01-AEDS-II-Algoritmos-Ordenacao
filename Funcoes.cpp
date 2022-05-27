@@ -22,9 +22,12 @@ int ChooseInstance(); // Função para escolher qual instância abrir
 
 void ReadFile(int List[], int size, string fileName); // Função que abre o arquivo da instância escolhida e preenche o vetor
 
+void SaveData(string methodName, string fileName, double totalTime, long long int comparisons, long long int numExchanges);
+// Função para salvar os dados de execução em arquivo txt para depois poder fazer a análise dos dados 
+
 void ReadInstances(int choice, int option); // Função que define a instância escolhida e usando ela no algoritmo
 
-void CalculateTime(int List[], int size, int option);
+void CalculateTime(int List[], int size, int option, string fileName);
 /* Função que calcula o tempo de execução do algoritmo escolhido e exibe o vetor ordenado,
 o número de comparações, o número de trocas e o tempo de execução.*/
 
@@ -202,6 +205,27 @@ void ReadFile(int List[], int size, string fileName)
     arqInput.close();
 }
 
+void SaveData(string methodName, string fileName, double totalTime, long long int comparisons, long long int numExchanges){
+
+    ofstream arqOutput; // variável para criar o arquivo
+
+    arqOutput.open(methodName, ios::app); // recebe a variável com o nome do metodo e o modo de abertura
+                                         // ios::app grava a partir do fim do arquivo 
+    if(arqOutput.fail()){
+        cerr << "ERRO! Não foi possivel criar o arquivo.\n";
+        arqOutput.clear();
+    }
+
+    arqOutput << "###" << methodName << " // " << fileName << "###" << endl; // salvando nome do metodo e da instancia
+    arqOutput << "Trocas: " << numExchanges << endl; // salvando número de trocas
+    arqOutput << "Comparações: " << comparisons << endl; // salvando número de comparações
+    arqOutput << "Tempo total: " << totalTime << endl << endl; // salvando tempo total
+
+    arqOutput.close();
+
+    cout << "Dados salvos com sucesso!" << endl;
+}
+
 void ReadInstances(int choice, int option)
 {
     system("cls");
@@ -218,7 +242,7 @@ void ReadInstances(int choice, int option)
 
         ReadFile(List1k, TAM_1000, fileName); // passando os dados para a função ReadFile
 
-        CalculateTime(List1k, TAM_1000, option); // passando os dados para a função CalculateTime
+        CalculateTime(List1k, TAM_1000, option, fileName); // passando os dados para a função CalculateTime
 
         cout << endl
              << endl;
@@ -232,7 +256,7 @@ void ReadInstances(int choice, int option)
 
         ReadFile(List10k, TAM_10000, fileName);
 
-        CalculateTime(List10k, TAM_10000, option);
+        CalculateTime(List10k, TAM_10000, option, fileName);
 
         cout << endl
              << endl;
@@ -246,7 +270,7 @@ void ReadInstances(int choice, int option)
 
         ReadFile(List100k, TAM_100000, fileName);
 
-        CalculateTime(List100k, TAM_100000, option);
+        CalculateTime(List100k, TAM_100000, option, fileName);
 
         cout << endl
              << endl;
@@ -260,7 +284,7 @@ void ReadInstances(int choice, int option)
 
         ReadFile(List1k, TAM_1000, fileName);
 
-        CalculateTime(List1k, TAM_1000, option);
+        CalculateTime(List1k, TAM_1000, option, fileName);
 
         cout << endl
              << endl;
@@ -274,7 +298,7 @@ void ReadInstances(int choice, int option)
 
         ReadFile(List10k, TAM_10000, fileName);
 
-        CalculateTime(List10k, TAM_10000, option);
+        CalculateTime(List10k, TAM_10000, option, fileName);
 
         cout << endl
              << endl;
@@ -288,7 +312,7 @@ void ReadInstances(int choice, int option)
 
         ReadFile(List100k, TAM_100000, fileName);
 
-        CalculateTime(List100k, TAM_100000, option);
+        CalculateTime(List100k, TAM_100000, option, fileName);
 
         cout << endl
              << endl;
@@ -302,7 +326,7 @@ void ReadInstances(int choice, int option)
 
         ReadFile(List1k, TAM_1000, fileName);
 
-        CalculateTime(List1k, TAM_1000, option);
+        CalculateTime(List1k, TAM_1000, option, fileName);
 
         cout << endl
              << endl;
@@ -316,7 +340,7 @@ void ReadInstances(int choice, int option)
 
         ReadFile(List10k, TAM_10000, fileName);
 
-        CalculateTime(List10k, TAM_10000, option);
+        CalculateTime(List10k, TAM_10000, option, fileName);
 
         cout << endl
              << endl;
@@ -330,7 +354,7 @@ void ReadInstances(int choice, int option)
 
         ReadFile(List100k, TAM_100000, fileName);
 
-        CalculateTime(List100k, TAM_100000, option);
+        CalculateTime(List100k, TAM_100000, option, fileName);
 
         cout << endl
              << endl;
@@ -344,7 +368,7 @@ void ReadInstances(int choice, int option)
 
         ReadFile(List1k, TAM_1000, fileName);
 
-        CalculateTime(List1k, TAM_1000, option);
+        CalculateTime(List1k, TAM_1000, option, fileName);
 
         cout << endl
              << endl;
@@ -358,7 +382,7 @@ void ReadInstances(int choice, int option)
 
         ReadFile(List10k, TAM_10000, fileName);
 
-        CalculateTime(List10k, TAM_10000, option);
+        CalculateTime(List10k, TAM_10000, option, fileName);
 
         cout << endl
              << endl;
@@ -372,7 +396,7 @@ void ReadInstances(int choice, int option)
 
         ReadFile(List100k, TAM_100000, fileName);
 
-        CalculateTime(List100k, TAM_100000, option);
+        CalculateTime(List100k, TAM_100000, option, fileName);
 
         cout << endl
              << endl;
@@ -381,13 +405,16 @@ void ReadInstances(int choice, int option)
     }
 }
 
-void CalculateTime(int List[], int size, int option)
-{
+void CalculateTime(int List[], int size, int option, string fileName)
+{   
+    string methodName = ""; // variável que guarda o nome do metodo
     long long int comparisons = 0; // variável para guardar o número de comparações
-    long long int numExchanges = 0; // variável para guardar o número de trocas 
+    long double numExchanges = 0; // variável para guardar o número de trocas 
 
     if (option == 1)
-    {
+    {   
+        methodName = "BubbleSort"; // guardando nome do metodo 
+
         steady_clock::time_point initialTime = steady_clock::now(); // guarda o tempo inicial da execução
 
         numExchanges = BubbleSort(List, size, &comparisons); // executa a ordenação do vetor com o BubbleSort
@@ -403,6 +430,8 @@ void CalculateTime(int List[], int size, int option)
         cout << "Número de trocas: " << numExchanges << endl << endl; // exibe o número de trocas total
 
         cout << "Número de comparações: " << comparisons << endl << endl; // exibe o número de comparações totais
+
+        //SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 2)
@@ -499,7 +528,7 @@ void PrintVector(int List[], int size)
 int BubbleSort(int List[], int size, long long int *comparisons)
 {
     int aux, chance;
-    long long int numExchanges = 0;
+    long double numExchanges = 0;
 
     for (int i = 0; i < size - 1; i++)
     {
