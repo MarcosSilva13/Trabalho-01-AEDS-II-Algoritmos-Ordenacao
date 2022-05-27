@@ -28,9 +28,9 @@ void CalculateTime(int List[], int size, int option);
 /* Função que calcula o tempo de execução do algoritmo escolhido e exibe o vetor ordenado,
 o número de comparações, o número de trocas e o tempo de execução.*/
 
-void ImprimirVetor(int List[], int size); // Função para imprimir o vetor
+void PrintVector(int List[], int size); // Função para imprimir o vetor
 
-void BubbleSort(int List[], int size); // Função do algoritmo Bubble Sort
+int BubbleSort(int List[], int size, long long int *comparisons); // Função do algoritmo Bubble Sort
 
 void ShellSort(int List[], int size); // Função do algoritmo Shell Sort
 
@@ -383,22 +383,26 @@ void ReadInstances(int choice, int option)
 
 void CalculateTime(int List[], int size, int option)
 {
-    // int comparisons = 0; precisar ser ponteiro e ser paramentro nos metodos de ordenar
+    long long int comparisons = 0; // variável para guardar o número de comparações
+    long long int numExchanges = 0; // variável para guardar o número de trocas 
 
     if (option == 1)
     {
         steady_clock::time_point initialTime = steady_clock::now(); // guarda o tempo inicial da execução
 
-        BubbleSort(List, size); // executa a ordenação do vetor com o BubbleSort
+        numExchanges = BubbleSort(List, size, &comparisons); // executa a ordenação do vetor com o BubbleSort
 
         steady_clock::time_point finalTime = steady_clock::now(); //  guarda o tempo final da execução
 
         duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // calcula o tempo total da execução
 
-        ImprimirVetor(List, size); // imprimi o vetor ordenado
+        PrintVector(List, size); // imprimi o vetor ordenado
 
-        cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
-             << endl; // exibe o tempo total da execução
+        cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl << endl; // exibe o tempo total da execução
+        
+        cout << "Número de trocas: " << numExchanges << endl << endl; // exibe o número de trocas total
+
+        cout << "Número de comparações: " << comparisons << endl << endl; // exibe o número de comparações totais
     }
 
     if (option == 2)
@@ -411,7 +415,7 @@ void CalculateTime(int List[], int size, int option)
 
         duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime);
 
-        ImprimirVetor(List, size);
+        PrintVector(List, size);
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
              << endl;
@@ -427,7 +431,7 @@ void CalculateTime(int List[], int size, int option)
 
         duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime);
 
-        ImprimirVetor(List, size);
+        PrintVector(List, size);
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
              << endl;
@@ -443,7 +447,7 @@ void CalculateTime(int List[], int size, int option)
 
         duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime);
 
-        ImprimirVetor(List, size);
+        PrintVector(List, size);
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
              << endl;
@@ -459,7 +463,7 @@ void CalculateTime(int List[], int size, int option)
 
         duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime);
 
-        ImprimirVetor(List, size);
+        PrintVector(List, size);
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
              << endl;
@@ -475,14 +479,14 @@ void CalculateTime(int List[], int size, int option)
 
         duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime);
 
-        ImprimirVetor(List, size);
+        PrintVector(List, size);
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
              << endl;
     }
 }
 
-void ImprimirVetor(int List[], int size)
+void PrintVector(int List[], int size)
 {
     for (int i = 0; i < size; i++)
     {
@@ -492,9 +496,11 @@ void ImprimirVetor(int List[], int size)
 
 // Funções dos Algoritmos
 
-void BubbleSort(int List[], int size)
+int BubbleSort(int List[], int size, long long int *comparisons)
 {
-    int aux, chance, numExchanges = 0;
+    int aux, chance;
+    long long int numExchanges = 0;
+
     for (int i = 0; i < size - 1; i++)
     {
         chance = 0;
@@ -506,7 +512,10 @@ void BubbleSort(int List[], int size)
                 List[j] = List[j - 1];
                 List[j - 1] = aux;
                 chance = 1;
-                // numExchanges++;
+                (*comparisons)++;
+                numExchanges++;
+            } else {
+                (*comparisons)++;
             }
         }
         if (chance == 0)
@@ -514,7 +523,7 @@ void BubbleSort(int List[], int size)
             break;
         }
     }
-    // return numExchanges;
+    return numExchanges;
 }
 
 void ShellSort(int List[], int size)
