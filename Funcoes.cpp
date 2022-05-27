@@ -37,7 +37,7 @@ void BubbleSort(int List[], int size, long long int *comparisons, unsigned long 
 
 void ShellSort(int List[], int size, long long int *comparisons, unsigned long long *numExchanges); // Função do algoritmo Shell Sort
 
-void SelectionSort(int List[], int size); // Função do algoritmo Selection Sort
+void SelectionSort(int List[], int size, long long int *comparisons, unsigned long long *numExchanges); // Função do algoritmo Selection Sort
 
 void InsertionSort(int List[], int size); // Função do algoritmo Insertion Sort
 
@@ -436,7 +436,7 @@ void CalculateTime(int List[], int size, int option, string fileName)
         cout << "Número de comparações: " << comparisons << endl
              << endl; // exibe o número de comparações totais
 
-        SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
+        //SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 2)
@@ -462,23 +462,33 @@ void CalculateTime(int List[], int size, int option, string fileName)
         cout << "Número de comparações: " << comparisons << endl
              << endl; // exibe o número de comparações totais
 
-        SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
+        //SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 3)
     {
-        steady_clock::time_point initialTime = steady_clock::now();
+        methodName = "SelectionSort"; // guardando nome do metodo
 
-        SelectionSort(List, size); // executa a ordenação do vetor com o SelectionSort
+        steady_clock::time_point initialTime = steady_clock::now(); // guarda o tempo inicial da execução
 
-        steady_clock::time_point finalTime = steady_clock::now();
+        SelectionSort(List, size, &comparisons, &numExchanges); // executa a ordenação do vetor com o SelectionSort
 
-        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime);
+        steady_clock::time_point finalTime = steady_clock::now(); //  guarda o tempo final da execução
 
-        PrintVector(List, size);
+        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // calcula o tempo total da execução
+
+        PrintVector(List, size); // imprimi o vetor ordenado
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
-             << endl;
+             << endl; // exibe o tempo total da execução
+
+        cout << "Número de trocas: " << numExchanges << endl
+             << endl; // exibe o número de trocas total
+
+        cout << "Número de comparações: " << comparisons << endl
+             << endl; // exibe o número de comparações totais
+
+        //SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 4)
@@ -603,7 +613,7 @@ void ShellSort(int List[], int size, long long int *comparisons, unsigned long l
     }
 }
 
-void SelectionSort(int List[], int size)
+void SelectionSort(int List[], int size, long long int *comparisons, unsigned long long *numExchanges)
 {
     int min, aux, i, j;
 
@@ -615,12 +625,19 @@ void SelectionSort(int List[], int size)
         {
             if (List[j] < List[min])
             {
+                (*comparisons)++;
                 min = j;
+            } 
+            else 
+            {
+                (*comparisons)++;
             }
         }
         aux = List[i];
         List[i] = List[min];
         List[min] = aux;
+
+        (*numExchanges)++;
     }
 }
 
