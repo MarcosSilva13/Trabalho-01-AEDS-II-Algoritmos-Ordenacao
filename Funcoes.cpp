@@ -14,7 +14,7 @@ using namespace chrono;
 
 void MainMenu(); // Menu principal do programa para a escolha do metodo de ordenação
 
-void InstancesMenu(); // Menu do programa para a escolha das instancias
+void InstancesMenu(); // Menu do programa para a escolha das instâncias
 
 void ChoiceMenu(int option); // Menu para exibir o algoritmo que foi escolhido para a ordenação
 
@@ -162,18 +162,17 @@ void ChoiceMenu(int option)
 
 int ChooseInstance()
 {
-    int option = 0;
+    int option = 0; // Variável que guardará a instância escolhida
 
     do
     {
         system("cls");
 
-        InstancesMenu();
-
+        InstancesMenu(); // Função com o menu das instâncias 
         cout << "Escolha uma opção: ";
         cin >> option;
 
-        if (option < 1 || option > 13)
+        if (option < 1 || option > 13) // Caso não seja digitado um número de 1 ate 13
         {
             system("cls");
             cout << "Opção inválida!" << endl;
@@ -182,14 +181,14 @@ int ChooseInstance()
 
     } while (option < 1 || option > 13);
 
-    return option;
+    return option; 
 }
 
 void ReadFile(int List[], int size, string fileName)
 {
-    ifstream arqInput; // variável para ler o arquivo
+    ifstream arqInput; // Variável para ler o arquivo
 
-    arqInput.open(fileName); // recebe a variavel com o nome da instância e abre ela
+    arqInput.open(fileName); // Recebe a variavel com o nome da instância e abre ela
 
     if (!arqInput.is_open())
     {
@@ -197,7 +196,7 @@ void ReadFile(int List[], int size, string fileName)
         arqInput.clear();
     }
 
-    for (int i = 0; i < size; i++) // preenchendo o vetor com os dados lidos do arquivo
+    for (int i = 0; i < size; i++) // Preenchendo o vetor com os dados lidos do arquivo
     {
         arqInput >> List[i];
     }
@@ -207,9 +206,9 @@ void ReadFile(int List[], int size, string fileName)
 
 void SaveData(string methodName, string fileName, double totalTime, long long int comparisons, unsigned long long numExchanges)
 {
-    ofstream arqOutput; // variável para criar o arquivo
+    ofstream arqOutput; // Variável para criar o arquivo
 
-    arqOutput.open(methodName, ios::app); // recebe a variável com o nome do metodo e o modo de abertura
+    arqOutput.open(methodName, ios::app); // Recebe a variável com o nome do metodo e o modo de abertura
                                           // ios::app grava a partir do fim do arquivo
     if (arqOutput.fail())
     {
@@ -217,11 +216,11 @@ void SaveData(string methodName, string fileName, double totalTime, long long in
         arqOutput.clear();
     }
 
-    arqOutput << "###" << methodName << " // " << fileName << "###" << endl; // salvando nome do metodo e da instancia
-    arqOutput << "Trocas: " << numExchanges << endl;                         // salvando número de trocas
-    arqOutput << "Comparações: " << comparisons << endl;                     // salvando número de comparações
+    arqOutput << "###" << methodName << " // " << fileName << "###" << endl; // Salvando nome do metodo e da instância
+    arqOutput << "Trocas: " << numExchanges << endl;                         // Salvando número de trocas
+    arqOutput << "Comparações: " << comparisons << endl;                     // Salvando número de comparações
     arqOutput << "Tempo total: " << totalTime << endl
-              << endl; // salvando tempo total
+              << endl; // Salvando tempo total
 
     arqOutput.close();
 
@@ -232,19 +231,19 @@ void ReadInstances(int choice, int option)
 {
     system("cls");
 
-    string fileName = ""; // variável para guardar o nome da instância
+    string fileName = ""; // Variável para guardar o nome da instância
 
-    int List1k[TAM_1K];     // criando vetor de tamanho 1000 (mil)
-    int List10k[TAM_10K];   // criando vetor de tamanho 10000 (dez mil)
-    int List100k[TAM_100K]; // criando vetor de tamanho 100000 (cem mil)
+    int List1k[TAM_1K];     // Criando vetor de tamanho 1000 (mil)
+    int List10k[TAM_10K];   // Criando vetor de tamanho 10000 (dez mil)
+    int List100k[TAM_100K]; // Criando vetor de tamanho 100000 (cem mil)
 
     if (choice == 1)
     {
-        fileName = "ListaAleatoria-1000.txt"; // guardando o nome da instância que ser vai utilizada
+        fileName = "ListaAleatoria-1000.txt"; // Guardando o nome da instância que ser vai utilizada
 
-        ReadFile(List1k, TAM_1K, fileName); // passando os dados para a função ReadFile
+        ReadFile(List1k, TAM_1K, fileName); // Passando os dados para a função ReadFile
 
-        CalculateTime(List1k, TAM_1K, option, fileName); // passando os dados para a função CalculateTime
+        CalculateTime(List1k, TAM_1K, option, fileName); // Passando os dados para a função CalculateTime
 
         cout << endl
              << endl;
@@ -252,13 +251,13 @@ void ReadInstances(int choice, int option)
         system("cls");
     }
 
-    if (choice == 2) // mesma ideia do primeiro IF, so altera o tamanho do vetor e o nome da instância
+    if (choice == 2) 
     {
-        fileName = "ListaAleatoria-10000.txt";
+        fileName = "ListaAleatoria-10000.txt"; // Guardando o nome da instância que ser vai utilizada
 
-        ReadFile(List10k, TAM_10K, fileName);
+        ReadFile(List10k, TAM_10K, fileName); // Passando os dados para a função ReadFile
 
-        CalculateTime(List10k, TAM_10K, option, fileName);
+        CalculateTime(List10k, TAM_10K, option, fileName); // Passando os dados para a função CalculateTime
 
         cout << endl
              << endl;
@@ -268,11 +267,11 @@ void ReadInstances(int choice, int option)
 
     if (choice == 3)
     {
-        fileName = "ListaAleatoria-100000.txt";
+        fileName = "ListaAleatoria-100000.txt"; // Guardando o nome da instância que ser vai utilizada
 
-        ReadFile(List100k, TAM_100K, fileName);
+        ReadFile(List100k, TAM_100K, fileName); // Passando os dados para a função ReadFile
 
-        CalculateTime(List100k, TAM_100K, option, fileName);
+        CalculateTime(List100k, TAM_100K, option, fileName); // Passando os dados para a função CalculateTime
 
         cout << endl
              << endl;
@@ -282,11 +281,11 @@ void ReadInstances(int choice, int option)
 
     if (choice == 4)
     {
-        fileName = "ListaInversamenteOrdenada-1000.txt";
+        fileName = "ListaInversamenteOrdenada-1000.txt"; // Guardando o nome da instância que ser vai utilizada
 
-        ReadFile(List1k, TAM_1K, fileName);
+        ReadFile(List1k, TAM_1K, fileName); // Passando os dados para a função ReadFile
 
-        CalculateTime(List1k, TAM_1K, option, fileName);
+        CalculateTime(List1k, TAM_1K, option, fileName); // Passando os dados para a função CalculateTime
 
         cout << endl
              << endl;
@@ -296,11 +295,11 @@ void ReadInstances(int choice, int option)
 
     if (choice == 5)
     {
-        fileName = "ListaInversamenteOrdenada-10000.txt";
+        fileName = "ListaInversamenteOrdenada-10000.txt"; // Guardando o nome da instância que ser vai utilizada
 
-        ReadFile(List10k, TAM_10K, fileName);
-
-        CalculateTime(List10k, TAM_10K, option, fileName);
+        ReadFile(List10k, TAM_10K, fileName); // Passando os dados para a função ReadFile
+ 
+        CalculateTime(List10k, TAM_10K, option, fileName); // Passando os dados para a função CalculateTime
 
         cout << endl
              << endl;
@@ -310,11 +309,11 @@ void ReadInstances(int choice, int option)
 
     if (choice == 6)
     {
-        fileName = "ListaInversamenteOrdenada-100000.txt";
+        fileName = "ListaInversamenteOrdenada-100000.txt"; // Guardando o nome da instância que ser vai utilizada
 
-        ReadFile(List100k, TAM_100K, fileName);
+        ReadFile(List100k, TAM_100K, fileName); // Passando os dados para a função ReadFile
 
-        CalculateTime(List100k, TAM_100K, option, fileName);
+        CalculateTime(List100k, TAM_100K, option, fileName); // Passando os dados para a função CalculateTime
 
         cout << endl
              << endl;
@@ -324,11 +323,11 @@ void ReadInstances(int choice, int option)
 
     if (choice == 7)
     {
-        fileName = "ListaOrdenada-1000.txt";
+        fileName = "ListaOrdenada-1000.txt"; // Guardando o nome da instância que ser vai utilizada
 
-        ReadFile(List1k, TAM_1K, fileName);
+        ReadFile(List1k, TAM_1K, fileName); // Passando os dados para a função ReadFile
 
-        CalculateTime(List1k, TAM_1K, option, fileName);
+        CalculateTime(List1k, TAM_1K, option, fileName); // Passando os dados para a função CalculateTime
 
         cout << endl
              << endl;
@@ -338,11 +337,11 @@ void ReadInstances(int choice, int option)
 
     if (choice == 8)
     {
-        fileName = "ListaOrdenada-10000.txt";
+        fileName = "ListaOrdenada-10000.txt"; // Guardando o nome da instância que ser vai utilizada
 
-        ReadFile(List10k, TAM_10K, fileName);
+        ReadFile(List10k, TAM_10K, fileName); // Passando os dados para a função ReadFile
 
-        CalculateTime(List10k, TAM_10K, option, fileName);
+        CalculateTime(List10k, TAM_10K, option, fileName); // Passando os dados para a função CalculateTime
 
         cout << endl
              << endl;
@@ -352,11 +351,11 @@ void ReadInstances(int choice, int option)
 
     if (choice == 9)
     {
-        fileName = "ListaOrdenada-100000.txt";
+        fileName = "ListaOrdenada-100000.txt"; // Guardando o nome da instância que ser vai utilizada
 
-        ReadFile(List100k, TAM_100K, fileName);
+        ReadFile(List100k, TAM_100K, fileName); // Passando os dados para a função ReadFile
 
-        CalculateTime(List100k, TAM_100K, option, fileName);
+        CalculateTime(List100k, TAM_100K, option, fileName); // Passando os dados para a função CalculateTime
 
         cout << endl
              << endl;
@@ -366,11 +365,11 @@ void ReadInstances(int choice, int option)
 
     if (choice == 10)
     {
-        fileName = "ListaQuaseOrdenada-1000.txt";
+        fileName = "ListaQuaseOrdenada-1000.txt"; // Guardando o nome da instância que ser vai utilizada
 
-        ReadFile(List1k, TAM_1K, fileName);
+        ReadFile(List1k, TAM_1K, fileName); // Passando os dados para a função ReadFile
 
-        CalculateTime(List1k, TAM_1K, option, fileName);
+        CalculateTime(List1k, TAM_1K, option, fileName); // Passando os dados para a função CalculateTime
 
         cout << endl
              << endl;
@@ -380,11 +379,11 @@ void ReadInstances(int choice, int option)
 
     if (choice == 11)
     {
-        fileName = "ListaQuaseOrdenada-10000.txt";
+        fileName = "ListaQuaseOrdenada-10000.txt"; // Guardando o nome da instância que ser vai utilizada
 
-        ReadFile(List10k, TAM_10K, fileName);
+        ReadFile(List10k, TAM_10K, fileName); // Passando os dados para a função ReadFile
 
-        CalculateTime(List10k, TAM_10K, option, fileName);
+        CalculateTime(List10k, TAM_10K, option, fileName); // Passando os dados para a função CalculateTime
 
         cout << endl
              << endl;
@@ -394,11 +393,11 @@ void ReadInstances(int choice, int option)
 
     if (choice == 12)
     {
-        fileName = "ListaQuaseOrdenada-100000.txt";
+        fileName = "ListaQuaseOrdenada-100000.txt"; // Guardando o nome da instância que ser vai utilizada
 
-        ReadFile(List100k, TAM_100K, fileName);
+        ReadFile(List100k, TAM_100K, fileName); // Passando os dados para a função ReadFile
 
-        CalculateTime(List100k, TAM_100K, option, fileName);
+        CalculateTime(List100k, TAM_100K, option, fileName); // Passando os dados para a função CalculateTime
 
         cout << endl
              << endl;
@@ -409,39 +408,39 @@ void ReadInstances(int choice, int option)
 
 void CalculateTime(int List[], int size, int option, string fileName)
 {
-    string methodName = "";              // variável que guarda o nome do metodo
-    long long int comparisons = 0;       // variável para guardar o número de comparações
-    unsigned long long numExchanges = 0; // variável para guardar o número de trocas
+    string methodName = "";              // Variável que guarda o nome do metodo
+    long long int comparisons = 0;       // Variável para guardar o número de comparações
+    unsigned long long numExchanges = 0; // Variável para guardar o número de trocas
 
     if (option == 1)
     {
-        methodName = "BubbleSort"; // guardando nome do metodo
+        methodName = "BubbleSort"; // Guardando nome do metodo
 
-        steady_clock::time_point initialTime = steady_clock::now(); // guarda o tempo inicial da execução
+        steady_clock::time_point initialTime = steady_clock::now(); // Guarda o tempo inicial da execução
 
-        BubbleSort(List, size, &comparisons, &numExchanges); // executa a ordenação do vetor com o BubbleSort
+        BubbleSort(List, size, &comparisons, &numExchanges); // Executa a ordenação do vetor com o BubbleSort
 
-        steady_clock::time_point finalTime = steady_clock::now(); //  guarda o tempo final da execução
+        steady_clock::time_point finalTime = steady_clock::now(); //  Guarda o tempo final da execução
 
-        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // calcula o tempo total da execução
+        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // Calcula o tempo total da execução
 
-        PrintVector(List, size); // imprimi o vetor ordenado
+        PrintVector(List, size); // Imprimi o vetor ordenado
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
-             << endl; // exibe o tempo total da execução
+             << endl; // Exibe o tempo total da execução
 
         cout << "Número de trocas: " << numExchanges << endl
-             << endl; // exibe o número de trocas total
+             << endl; // Exibe o número de trocas total
 
         cout << "Número de comparações: " << comparisons << endl
-             << endl; // exibe o número de comparações totais
+             << endl; // Exibe o número de comparações totais
 
         // SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 2)
     {
-        methodName = "ShellSort"; // guardando nome do metodo
+        methodName = "ShellSort"; // Guardando nome do metodo
 
         steady_clock::time_point initialTime = steady_clock::now(); // guarda o tempo inicial da execução
 
@@ -467,104 +466,104 @@ void CalculateTime(int List[], int size, int option, string fileName)
 
     if (option == 3)
     {
-        methodName = "SelectionSort"; // guardando nome do metodo
+        methodName = "SelectionSort"; // Guardando nome do metodo
 
-        steady_clock::time_point initialTime = steady_clock::now(); // guarda o tempo inicial da execução
+        steady_clock::time_point initialTime = steady_clock::now(); // Guarda o tempo inicial da execução
 
-        SelectionSort(List, size, &comparisons, &numExchanges); // executa a ordenação do vetor com o SelectionSort
+        SelectionSort(List, size, &comparisons, &numExchanges); // Executa a ordenação do vetor com o SelectionSort
 
-        steady_clock::time_point finalTime = steady_clock::now(); //  guarda o tempo final da execução
+        steady_clock::time_point finalTime = steady_clock::now(); // Guarda o tempo final da execução
 
-        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // calcula o tempo total da execução
+        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // Calcula o tempo total da execução
 
-        PrintVector(List, size); // imprimi o vetor ordenado
+        PrintVector(List, size); // Imprimi o vetor ordenado
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
-             << endl; // exibe o tempo total da execução
+             << endl; // Exibe o tempo total da execução
 
         cout << "Número de trocas: " << numExchanges << endl
-             << endl; // exibe o número de trocas total
+             << endl; // Exibe o número de trocas total
 
         cout << "Número de comparações: " << comparisons << endl
-             << endl; // exibe o número de comparações totais
+             << endl; // Exibe o número de comparações totais
 
         // SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 4)
     {
-        methodName = "InsertionSort"; // guardando nome do metodo
+        methodName = "InsertionSort"; // Guardando nome do metodo
 
-        steady_clock::time_point initialTime = steady_clock::now(); // guarda o tempo inicial da execução
+        steady_clock::time_point initialTime = steady_clock::now(); // Guarda o tempo inicial da execução
 
-        InsertionSort(List, size, &comparisons, &numExchanges); // executa a ordenação do vetor com o InsertionSort
+        InsertionSort(List, size, &comparisons, &numExchanges); // Executa a ordenação do vetor com o InsertionSort
 
-        steady_clock::time_point finalTime = steady_clock::now(); //  guarda o tempo final da execução
+        steady_clock::time_point finalTime = steady_clock::now(); // Guarda o tempo final da execução
 
-        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // calcula o tempo total da execução
+        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // Calcula o tempo total da execução
 
-        PrintVector(List, size); // imprimi o vetor ordenado
+        PrintVector(List, size); // Imprimi o vetor ordenado
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
-             << endl; // exibe o tempo total da execução
+             << endl; // Exibe o tempo total da execução
 
         cout << "Número de trocas: " << numExchanges << endl
-             << endl; // exibe o número de trocas total
+             << endl; // Exibe o número de trocas total
 
         cout << "Número de comparações: " << comparisons << endl
-             << endl; // exibe o número de comparações totais
+             << endl; // Exibe o número de comparações totais
 
         // SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 5)
     {
-        methodName = "QuickSort"; // guardando nome do metodo
+        methodName = "QuickSort"; // Guardando nome do metodo
 
-        steady_clock::time_point initialTime = steady_clock::now(); // guarda o tempo inicial da execução
+        steady_clock::time_point initialTime = steady_clock::now(); // Guarda o tempo inicial da execução
 
-        QuickSort(List, 0, size - 1, &comparisons, &numExchanges); // executa a ordenação do vetor com o QuickSort
+        QuickSort(List, 0, size - 1, &comparisons, &numExchanges); // Executa a ordenação do vetor com o QuickSort
 
-        steady_clock::time_point finalTime = steady_clock::now(); //  guarda o tempo final da execução
+        steady_clock::time_point finalTime = steady_clock::now(); // Guarda o tempo final da execução
 
-        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // calcula o tempo total da execução
+        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // Calcula o tempo total da execução
 
-        PrintVector(List, size); // imprimi o vetor ordenado
+        PrintVector(List, size); // Imprimi o vetor ordenado
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
-             << endl; // exibe o tempo total da execução
+             << endl; // Exibe o tempo total da execução
 
         cout << "Número de trocas: " << numExchanges << endl
-             << endl; // exibe o número de trocas total
+             << endl; // Exibe o número de trocas total
 
         cout << "Número de comparações: " << comparisons << endl
-             << endl; // exibe o número de comparações totais
+             << endl; // Exibe o número de comparações totais
 
         // SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 6)
     {
-        methodName = "MergeSort"; // guardando nome do metodo
+        methodName = "MergeSort"; // Guardando nome do metodo
 
-        steady_clock::time_point initialTime = steady_clock::now(); // guarda o tempo inicial da execução
+        steady_clock::time_point initialTime = steady_clock::now(); // Guarda o tempo inicial da execução
 
-        MergeSort(List, 0, size - 1, &comparisons, &numExchanges); // executa a ordenação do vetor com o MergeSort
+        MergeSort(List, 0, size - 1, &comparisons, &numExchanges); // Executa a ordenação do vetor com o MergeSort
 
-        steady_clock::time_point finalTime = steady_clock::now(); //  guarda o tempo final da execução
+        steady_clock::time_point finalTime = steady_clock::now(); // Guarda o tempo final da execução
 
-        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // calcula o tempo total da execução
+        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // Calcula o tempo total da execução
 
-        PrintVector(List, size); // imprimi o vetor ordenado
+        PrintVector(List, size); // Imprimi o vetor ordenado
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
-             << endl; // exibe o tempo total da execução
+             << endl; // Exibe o tempo total da execução
 
         cout << "Número de trocas: " << numExchanges << endl
-             << endl; // exibe o número de trocas total
+             << endl; // Exibe o número de trocas total
 
         cout << "Número de comparações: " << comparisons << endl
-             << endl; // exibe o número de comparações totais
+             << endl; // Exibe o número de comparações totais
 
         // SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
