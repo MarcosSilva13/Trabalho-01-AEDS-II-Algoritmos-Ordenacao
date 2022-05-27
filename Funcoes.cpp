@@ -3,9 +3,9 @@
 #include <time.h>
 #include <chrono>
 
-#define TAM_1000 1000
-#define TAM_10000 10000
-#define TAM_100000 100000
+#define TAM_1K 1000
+#define TAM_10K 10000
+#define TAM_100K 100000
 
 using namespace std;
 using namespace chrono;
@@ -43,9 +43,9 @@ void InsertionSort(int List[], int size, long long int *comparisons, unsigned lo
 
 void QuickSort(int List[], int left, int right, long long int *comparisons, unsigned long long *numExchanges); // Função do algoritmo Quick Sort
 
-void MergeSort(int List[], int start, int end); // Função do algoritmo Merge Sort
+void MergeSort(int List[], int start, int end, long long int *comparisons, unsigned long long *numExchanges); // Função do algoritmo Merge Sort
 
-void Intercala(int List[], int start, int mid, int end); // Função que junta os vetores do Merge Sort
+void Intercala(int List[], int start, int mid, int end, long long int *comparisons, unsigned long long *numExchanges); // Função que junta os vetores do Merge Sort
 
 // Funções
 
@@ -234,17 +234,17 @@ void ReadInstances(int choice, int option)
 
     string fileName = ""; // variável para guardar o nome da instância
 
-    int List1k[TAM_1000];     // criando vetor de tamanho 1000 (mil)
-    int List10k[TAM_10000];   // criando vetor de tamanho 10000 (dez mil)
-    int List100k[TAM_100000]; // criando vetor de tamanho 100000 (cem mil)
+    int List1k[TAM_1K];     // criando vetor de tamanho 1000 (mil)
+    int List10k[TAM_10K];   // criando vetor de tamanho 10000 (dez mil)
+    int List100k[TAM_100K]; // criando vetor de tamanho 100000 (cem mil)
 
     if (choice == 1)
     {
         fileName = "ListaAleatoria-1000.txt"; // guardando o nome da instância que ser vai utilizada
 
-        ReadFile(List1k, TAM_1000, fileName); // passando os dados para a função ReadFile
+        ReadFile(List1k, TAM_1K, fileName); // passando os dados para a função ReadFile
 
-        CalculateTime(List1k, TAM_1000, option, fileName); // passando os dados para a função CalculateTime
+        CalculateTime(List1k, TAM_1K, option, fileName); // passando os dados para a função CalculateTime
 
         cout << endl
              << endl;
@@ -256,9 +256,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaAleatoria-10000.txt";
 
-        ReadFile(List10k, TAM_10000, fileName);
+        ReadFile(List10k, TAM_10K, fileName);
 
-        CalculateTime(List10k, TAM_10000, option, fileName);
+        CalculateTime(List10k, TAM_10K, option, fileName);
 
         cout << endl
              << endl;
@@ -270,9 +270,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaAleatoria-100000.txt";
 
-        ReadFile(List100k, TAM_100000, fileName);
+        ReadFile(List100k, TAM_100K, fileName);
 
-        CalculateTime(List100k, TAM_100000, option, fileName);
+        CalculateTime(List100k, TAM_100K, option, fileName);
 
         cout << endl
              << endl;
@@ -284,9 +284,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaInversamenteOrdenada-1000.txt";
 
-        ReadFile(List1k, TAM_1000, fileName);
+        ReadFile(List1k, TAM_1K, fileName);
 
-        CalculateTime(List1k, TAM_1000, option, fileName);
+        CalculateTime(List1k, TAM_1K, option, fileName);
 
         cout << endl
              << endl;
@@ -298,9 +298,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaInversamenteOrdenada-10000.txt";
 
-        ReadFile(List10k, TAM_10000, fileName);
+        ReadFile(List10k, TAM_10K, fileName);
 
-        CalculateTime(List10k, TAM_10000, option, fileName);
+        CalculateTime(List10k, TAM_10K, option, fileName);
 
         cout << endl
              << endl;
@@ -312,9 +312,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaInversamenteOrdenada-100000.txt";
 
-        ReadFile(List100k, TAM_100000, fileName);
+        ReadFile(List100k, TAM_100K, fileName);
 
-        CalculateTime(List100k, TAM_100000, option, fileName);
+        CalculateTime(List100k, TAM_100K, option, fileName);
 
         cout << endl
              << endl;
@@ -326,9 +326,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaOrdenada-1000.txt";
 
-        ReadFile(List1k, TAM_1000, fileName);
+        ReadFile(List1k, TAM_1K, fileName);
 
-        CalculateTime(List1k, TAM_1000, option, fileName);
+        CalculateTime(List1k, TAM_1K, option, fileName);
 
         cout << endl
              << endl;
@@ -340,9 +340,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaOrdenada-10000.txt";
 
-        ReadFile(List10k, TAM_10000, fileName);
+        ReadFile(List10k, TAM_10K, fileName);
 
-        CalculateTime(List10k, TAM_10000, option, fileName);
+        CalculateTime(List10k, TAM_10K, option, fileName);
 
         cout << endl
              << endl;
@@ -354,9 +354,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaOrdenada-100000.txt";
 
-        ReadFile(List100k, TAM_100000, fileName);
+        ReadFile(List100k, TAM_100K, fileName);
 
-        CalculateTime(List100k, TAM_100000, option, fileName);
+        CalculateTime(List100k, TAM_100K, option, fileName);
 
         cout << endl
              << endl;
@@ -368,9 +368,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaQuaseOrdenada-1000.txt";
 
-        ReadFile(List1k, TAM_1000, fileName);
+        ReadFile(List1k, TAM_1K, fileName);
 
-        CalculateTime(List1k, TAM_1000, option, fileName);
+        CalculateTime(List1k, TAM_1K, option, fileName);
 
         cout << endl
              << endl;
@@ -382,9 +382,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaQuaseOrdenada-10000.txt";
 
-        ReadFile(List10k, TAM_10000, fileName);
+        ReadFile(List10k, TAM_10K, fileName);
 
-        CalculateTime(List10k, TAM_10000, option, fileName);
+        CalculateTime(List10k, TAM_10K, option, fileName);
 
         cout << endl
              << endl;
@@ -396,9 +396,9 @@ void ReadInstances(int choice, int option)
     {
         fileName = "ListaQuaseOrdenada-100000.txt";
 
-        ReadFile(List100k, TAM_100000, fileName);
+        ReadFile(List100k, TAM_100K, fileName);
 
-        CalculateTime(List100k, TAM_100000, option, fileName);
+        CalculateTime(List100k, TAM_100K, option, fileName);
 
         cout << endl
              << endl;
@@ -436,7 +436,7 @@ void CalculateTime(int List[], int size, int option, string fileName)
         cout << "Número de comparações: " << comparisons << endl
              << endl; // exibe o número de comparações totais
 
-        //SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
+        // SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 2)
@@ -462,7 +462,7 @@ void CalculateTime(int List[], int size, int option, string fileName)
         cout << "Número de comparações: " << comparisons << endl
              << endl; // exibe o número de comparações totais
 
-        //SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
+        // SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 3)
@@ -488,7 +488,7 @@ void CalculateTime(int List[], int size, int option, string fileName)
         cout << "Número de comparações: " << comparisons << endl
              << endl; // exibe o número de comparações totais
 
-        //SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
+        // SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 4)
@@ -514,7 +514,7 @@ void CalculateTime(int List[], int size, int option, string fileName)
         cout << "Número de comparações: " << comparisons << endl
              << endl; // exibe o número de comparações totais
 
-        //SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
+        // SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 5)
@@ -540,23 +540,33 @@ void CalculateTime(int List[], int size, int option, string fileName)
         cout << "Número de comparações: " << comparisons << endl
              << endl; // exibe o número de comparações totais
 
-        //SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
+        // SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 6)
     {
-        steady_clock::time_point initialTime = steady_clock::now();
+        methodName = "MergeSort"; // guardando nome do metodo
 
-        MergeSort(List, 0, size - 1); // executa a ordenação do vetor com o MergeSort
+        steady_clock::time_point initialTime = steady_clock::now(); // guarda o tempo inicial da execução
 
-        steady_clock::time_point finalTime = steady_clock::now();
+        MergeSort(List, 0, size - 1, &comparisons, &numExchanges); // executa a ordenação do vetor com o MergeSort
 
-        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime);
+        steady_clock::time_point finalTime = steady_clock::now(); //  guarda o tempo final da execução
 
-        PrintVector(List, size);
+        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // calcula o tempo total da execução
+
+        PrintVector(List, size); // imprimi o vetor ordenado
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
-             << endl;
+             << endl; // exibe o tempo total da execução
+
+        cout << "Número de trocas: " << numExchanges << endl
+             << endl; // exibe o número de trocas total
+
+        cout << "Número de comparações: " << comparisons << endl
+             << endl; // exibe o número de comparações totais
+
+        // SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 }
 
@@ -647,8 +657,8 @@ void SelectionSort(int List[], int size, long long int *comparisons, unsigned lo
             {
                 (*comparisons)++;
                 min = j;
-            } 
-            else 
+            }
+            else
             {
                 (*comparisons)++;
             }
@@ -673,7 +683,7 @@ void InsertionSort(int List[], int size, long long int *comparisons, unsigned lo
         (*comparisons)++;
 
         while (j >= 0 && List[j] > key)
-        {   
+        {
             (*comparisons)++;
 
             List[j + 1] = List[j];
@@ -717,19 +727,20 @@ void QuickSort(int List[], int left, int right, long long int *comparisons, unsi
         QuickSort(List, i, right, comparisons, numExchanges);
 }
 
-void MergeSort(int List[], int start, int end)
+void MergeSort(int List[], int start, int end, long long int *comparisons, unsigned long long int *numExchanges)
 {
     int mid;
     if (start < end)
     {
         mid = (start + end) / 2;
-        MergeSort(List, start, mid);
-        MergeSort(List, mid + 1, end);
-        Intercala(List, start, mid, end);
+        MergeSort(List, start, mid, comparisons, numExchanges);
+        MergeSort(List, mid + 1, end, comparisons, numExchanges);
+        Intercala(List, start, mid, end, comparisons, numExchanges);
+        (*comparisons)++;
     }
 }
 
-void Intercala(int List[], int start, int mid, int end)
+void Intercala(int List[], int start, int mid, int end, long long int *comparisons, unsigned long long *numExchanges)
 {
     int *ListAux = (int *)malloc(sizeof(int) * (end + 1));
     int i, j;
@@ -749,15 +760,18 @@ void Intercala(int List[], int start, int mid, int end)
 
     for (int k = start; k <= end; k++)
     {
+        (*comparisons)++;
         if (ListAux[i] <= ListAux[j])
         {
             List[k] = ListAux[i];
             i++;
+            (*numExchanges)++;
         }
         else
         {
             List[k] = ListAux[j];
             j--;
+            (*numExchanges)++;
         }
     }
     free(ListAux);
