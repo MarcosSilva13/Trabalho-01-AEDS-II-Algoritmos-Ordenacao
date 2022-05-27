@@ -22,7 +22,7 @@ int ChooseInstance(); // Função para escolher qual instância abrir
 
 void ReadFile(int List[], int size, string fileName); // Função que abre o arquivo da instância escolhida e preenche o vetor
 
-void SaveData(string methodName, string fileName, double totalTime, long long int comparisons, long long int numExchanges);
+void SaveData(string methodName, string fileName, double totalTime, long long int comparisons, unsigned long long numExchanges);
 // Função para salvar os dados de execução em arquivo txt para depois poder fazer a análise dos dados 
 
 void ReadInstances(int choice, int option); // Função que define a instância escolhida e usando ela no algoritmo
@@ -205,7 +205,7 @@ void ReadFile(int List[], int size, string fileName)
     arqInput.close();
 }
 
-void SaveData(string methodName, string fileName, double totalTime, long long int comparisons, long long int numExchanges){
+void SaveData(string methodName, string fileName, double totalTime, long long int comparisons, unsigned long long numExchanges){
 
     ofstream arqOutput; // variável para criar o arquivo
 
@@ -409,7 +409,7 @@ void CalculateTime(int List[], int size, int option, string fileName)
 {   
     string methodName = ""; // variável que guarda o nome do metodo
     long long int comparisons = 0; // variável para guardar o número de comparações
-    long double numExchanges = 0; // variável para guardar o número de trocas 
+    unsigned long long numExchanges = 0; // variável para guardar o número de trocas 
 
     if (option == 1)
     {   
@@ -431,11 +431,12 @@ void CalculateTime(int List[], int size, int option, string fileName)
 
         cout << "Número de comparações: " << comparisons << endl << endl; // exibe o número de comparações totais
 
-        //SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
+        SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 2)
     {
+        
         steady_clock::time_point initialTime = steady_clock::now();
 
         ShellSort(List, size); // executa a ordenação do vetor com o ShellSort
@@ -528,7 +529,7 @@ void PrintVector(int List[], int size)
 int BubbleSort(int List[], int size, long long int *comparisons)
 {
     int aux, chance;
-    long double numExchanges = 0;
+    unsigned long long numExchanges = 0;
 
     for (int i = 0; i < size - 1; i++)
     {
