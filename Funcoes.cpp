@@ -23,7 +23,7 @@ int ChooseInstance(); // Função para escolher qual instância abrir
 void ReadFile(int List[], int size, string fileName); // Função que abre o arquivo da instância escolhida e preenche o vetor
 
 void SaveData(string methodName, string fileName, double totalTime, long long int comparisons, unsigned long long numExchanges);
-// Função para salvar os dados de execução em arquivo txt para depois poder fazer a análise dos dados 
+// Função para salvar os dados de execução em arquivo txt para depois poder fazer a análise dos dados
 
 void ReadInstances(int choice, int option); // Função que define a instância escolhida e usando ela no algoritmo
 
@@ -33,9 +33,9 @@ o número de comparações, o número de trocas e o tempo de execução.*/
 
 void PrintVector(int List[], int size); // Função para imprimir o vetor
 
-int BubbleSort(int List[], int size, long long int *comparisons); // Função do algoritmo Bubble Sort
+void BubbleSort(int List[], int size, long long int *comparisons, unsigned long long *numExchanges); // Função do algoritmo Bubble Sort
 
-void ShellSort(int List[], int size); // Função do algoritmo Shell Sort
+void ShellSort(int List[], int size, long long int *comparisons, unsigned long long *numExchanges); // Função do algoritmo Shell Sort
 
 void SelectionSort(int List[], int size); // Função do algoritmo Selection Sort
 
@@ -205,21 +205,23 @@ void ReadFile(int List[], int size, string fileName)
     arqInput.close();
 }
 
-void SaveData(string methodName, string fileName, double totalTime, long long int comparisons, unsigned long long numExchanges){
-
+void SaveData(string methodName, string fileName, double totalTime, long long int comparisons, unsigned long long numExchanges)
+{
     ofstream arqOutput; // variável para criar o arquivo
 
     arqOutput.open(methodName, ios::app); // recebe a variável com o nome do metodo e o modo de abertura
-                                         // ios::app grava a partir do fim do arquivo 
-    if(arqOutput.fail()){
+                                          // ios::app grava a partir do fim do arquivo
+    if (arqOutput.fail())
+    {
         cerr << "ERRO! Não foi possivel criar o arquivo.\n";
         arqOutput.clear();
     }
 
     arqOutput << "###" << methodName << " // " << fileName << "###" << endl; // salvando nome do metodo e da instancia
-    arqOutput << "Trocas: " << numExchanges << endl; // salvando número de trocas
-    arqOutput << "Comparações: " << comparisons << endl; // salvando número de comparações
-    arqOutput << "Tempo total: " << totalTime << endl << endl; // salvando tempo total
+    arqOutput << "Trocas: " << numExchanges << endl;                         // salvando número de trocas
+    arqOutput << "Comparações: " << comparisons << endl;                     // salvando número de comparações
+    arqOutput << "Tempo total: " << totalTime << endl
+              << endl; // salvando tempo total
 
     arqOutput.close();
 
@@ -406,18 +408,18 @@ void ReadInstances(int choice, int option)
 }
 
 void CalculateTime(int List[], int size, int option, string fileName)
-{   
-    string methodName = ""; // variável que guarda o nome do metodo
-    long long int comparisons = 0; // variável para guardar o número de comparações
-    unsigned long long numExchanges = 0; // variável para guardar o número de trocas 
+{
+    string methodName = "";              // variável que guarda o nome do metodo
+    long long int comparisons = 0;       // variável para guardar o número de comparações
+    unsigned long long numExchanges = 0; // variável para guardar o número de trocas
 
     if (option == 1)
-    {   
-        methodName = "BubbleSort"; // guardando nome do metodo 
+    {
+        methodName = "BubbleSort"; // guardando nome do metodo
 
         steady_clock::time_point initialTime = steady_clock::now(); // guarda o tempo inicial da execução
 
-        numExchanges = BubbleSort(List, size, &comparisons); // executa a ordenação do vetor com o BubbleSort
+        BubbleSort(List, size, &comparisons, &numExchanges); // executa a ordenação do vetor com o BubbleSort
 
         steady_clock::time_point finalTime = steady_clock::now(); //  guarda o tempo final da execução
 
@@ -425,30 +427,42 @@ void CalculateTime(int List[], int size, int option, string fileName)
 
         PrintVector(List, size); // imprimi o vetor ordenado
 
-        cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl << endl; // exibe o tempo total da execução
-        
-        cout << "Número de trocas: " << numExchanges << endl << endl; // exibe o número de trocas total
+        cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
+             << endl; // exibe o tempo total da execução
 
-        cout << "Número de comparações: " << comparisons << endl << endl; // exibe o número de comparações totais
+        cout << "Número de trocas: " << numExchanges << endl
+             << endl; // exibe o número de trocas total
+
+        cout << "Número de comparações: " << comparisons << endl
+             << endl; // exibe o número de comparações totais
 
         SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 2)
     {
-        
-        steady_clock::time_point initialTime = steady_clock::now();
+        methodName = "ShellSort"; // guardando nome do metodo
 
-        ShellSort(List, size); // executa a ordenação do vetor com o ShellSort
+        steady_clock::time_point initialTime = steady_clock::now(); // guarda o tempo inicial da execução
 
-        steady_clock::time_point finalTime = steady_clock::now();
+        ShellSort(List, size, &comparisons, &numExchanges); // executa a ordenação do vetor com o ShellSort
 
-        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime);
+        steady_clock::time_point finalTime = steady_clock::now(); //  guarda o tempo final da execução
 
-        PrintVector(List, size);
+        duration<double> totalTime = duration_cast<duration<double>>(finalTime - initialTime); // calcula o tempo total da execução
+
+        PrintVector(List, size); // imprimi o vetor ordenado
 
         cout << "\n\nTempo total: " << totalTime.count() << " segundos" << endl
-             << endl;
+             << endl; // exibe o tempo total da execução
+
+        cout << "Número de trocas: " << numExchanges << endl
+             << endl; // exibe o número de trocas total
+
+        cout << "Número de comparações: " << comparisons << endl
+             << endl; // exibe o número de comparações totais
+
+        SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 3)
@@ -526,10 +540,9 @@ void PrintVector(int List[], int size)
 
 // Funções dos Algoritmos
 
-int BubbleSort(int List[], int size, long long int *comparisons)
+void BubbleSort(int List[], int size, long long int *comparisons, unsigned long long *numExchanges)
 {
     int aux, chance;
-    unsigned long long numExchanges = 0;
 
     for (int i = 0; i < size - 1; i++)
     {
@@ -538,13 +551,17 @@ int BubbleSort(int List[], int size, long long int *comparisons)
         {
             if (List[j] < List[j - 1])
             {
+                (*comparisons)++;
+
                 aux = List[j];
                 List[j] = List[j - 1];
                 List[j - 1] = aux;
                 chance = 1;
-                (*comparisons)++;
-                numExchanges++;
-            } else {
+
+                (*numExchanges)++;
+            }
+            else
+            {
                 (*comparisons)++;
             }
         }
@@ -553,19 +570,19 @@ int BubbleSort(int List[], int size, long long int *comparisons)
             break;
         }
     }
-    return numExchanges;
 }
 
-void ShellSort(int List[], int size)
+void ShellSort(int List[], int size, long long int *comparisons, unsigned long long *numExchanges)
 {
     int h, x, i, j;
 
-    for (h = 1; h < size; h = 3 * h + 1);
+    for (h = 1; h < size; h = 3 * h + 1)
+        ;
 
     while (h > 1)
     {
         h = h / 3;
-
+        (*comparisons)++;
         for (i = h; i < size; i++)
         {
             x = List[i];
@@ -573,10 +590,15 @@ void ShellSort(int List[], int size)
 
             while (j >= h && List[j - h] > x)
             {
+                (*comparisons)++;
+
                 List[j] = List[j - h];
                 j = j - h;
+
+                (*numExchanges)++;
             }
             List[j] = x;
+            (*comparisons)++;
         }
     }
 }
