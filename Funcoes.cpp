@@ -7,8 +7,8 @@
 #define TAM_10K 10000
 #define TAM_100K 100000
 
-double meanTime = 0; // variável para calcular a média do tempo salvo no arquivo
-int execution = 1;   // variável para contar o número de vezes que o algoritmo rodou para salvar no arquivo e fazer os calculos da média
+double meanTime = 0; // Variável para calcular a média do tempo salvo no arquivo
+int execution = 1;   // Variável para contar o número de vezes que o algoritmo rodou para salvar no arquivo e fazer os calculos da média
 
 using namespace std;
 using namespace chrono;
@@ -227,16 +227,17 @@ void SaveData(string methodName, string fileName, double totalTime, long long in
 
     if (execution < 10)
     {
-        arqOutput << "Nº execuções: " << execution << endl << endl;
-        meanTime += totalTime;
+        arqOutput << "Nº execuções: " << execution << endl
+                  << endl;     // Salvando número de execuções do arquivo
+        meanTime += totalTime; // Somando valores do tempo total
         execution++;
     }
     else
     {
-        meanTime += totalTime;
-        arqOutput << "Nº execuções: " << execution << endl;
+        meanTime += totalTime;                              // Somando valores do tempo total
+        arqOutput << "Nº execuções: " << execution << endl; // Salvando número de execuções do arquivo
         arqOutput << "Média do tempo: " << (meanTime / 10) << endl
-                  << endl;
+                  << endl; // Salvado a média do tempo total no arquivo
         meanTime = 0;
         execution = 1;
     }
@@ -710,8 +711,6 @@ void InsertionSort(int List[], int size, long long int *comparisons, unsigned lo
             (*numExchanges)++;
         }
         List[j + 1] = key;
-
-        
     }
 }
 
