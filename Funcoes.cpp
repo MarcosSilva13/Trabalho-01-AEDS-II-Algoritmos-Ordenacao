@@ -7,6 +7,9 @@
 #define TAM_10K 10000
 #define TAM_100K 100000
 
+double meanTime = 0; // variável para calcular a média do tempo salvo no arquivo
+int execution = 1;   // variável para contar o número de vezes que o algoritmo rodou para salvar no arquivo e fazer os calculos da média
+
 using namespace std;
 using namespace chrono;
 
@@ -168,7 +171,7 @@ int ChooseInstance()
     {
         system("cls");
 
-        InstancesMenu(); // Função com o menu das instâncias 
+        InstancesMenu(); // Função com o menu das instâncias
         cout << "Escolha uma opção: ";
         cin >> option;
 
@@ -181,7 +184,7 @@ int ChooseInstance()
 
     } while (option < 1 || option > 13);
 
-    return option; 
+    return option;
 }
 
 void ReadFile(int List[], int size, string fileName)
@@ -222,6 +225,22 @@ void SaveData(string methodName, string fileName, double totalTime, long long in
     arqOutput << "Tempo total: " << totalTime << endl
               << endl; // Salvando tempo total
 
+    if (execution < 10)
+    {
+        arqOutput << "Nº execuções: " << execution << endl << endl;
+        meanTime += totalTime;
+        execution++;
+    }
+    else
+    {
+        meanTime += totalTime;
+        arqOutput << "Nº execuções: " << execution << endl;
+        arqOutput << "Média do tempo: " << (meanTime / 10) << endl
+                  << endl;
+        meanTime = 0;
+        execution = 1;
+    }
+
     arqOutput.close();
 
     cout << "Dados salvos com sucesso!" << endl;
@@ -251,7 +270,7 @@ void ReadInstances(int choice, int option)
         system("cls");
     }
 
-    if (choice == 2) 
+    if (choice == 2)
     {
         fileName = "ListaAleatoria-10000.txt"; // Guardando o nome da instância que ser vai utilizada
 
@@ -298,7 +317,7 @@ void ReadInstances(int choice, int option)
         fileName = "ListaInversamenteOrdenada-10000.txt"; // Guardando o nome da instância que ser vai utilizada
 
         ReadFile(List10k, TAM_10K, fileName); // Passando os dados para a função ReadFile
- 
+
         CalculateTime(List10k, TAM_10K, option, fileName); // Passando os dados para a função CalculateTime
 
         cout << endl
@@ -435,7 +454,7 @@ void CalculateTime(int List[], int size, int option, string fileName)
         cout << "Número de comparações: " << comparisons << endl
              << endl; // Exibe o número de comparações totais
 
-        // SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
+        SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 2)
@@ -461,7 +480,7 @@ void CalculateTime(int List[], int size, int option, string fileName)
         cout << "Número de comparações: " << comparisons << endl
              << endl; // exibe o número de comparações totais
 
-        // SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
+        SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 3)
@@ -487,7 +506,7 @@ void CalculateTime(int List[], int size, int option, string fileName)
         cout << "Número de comparações: " << comparisons << endl
              << endl; // Exibe o número de comparações totais
 
-        // SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
+        SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 4)
@@ -513,7 +532,7 @@ void CalculateTime(int List[], int size, int option, string fileName)
         cout << "Número de comparações: " << comparisons << endl
              << endl; // Exibe o número de comparações totais
 
-        // SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
+        SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 5)
@@ -539,7 +558,7 @@ void CalculateTime(int List[], int size, int option, string fileName)
         cout << "Número de comparações: " << comparisons << endl
              << endl; // Exibe o número de comparações totais
 
-        // SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
+        SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 
     if (option == 6)
@@ -565,7 +584,7 @@ void CalculateTime(int List[], int size, int option, string fileName)
         cout << "Número de comparações: " << comparisons << endl
              << endl; // Exibe o número de comparações totais
 
-        // SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
+        SaveData(methodName, fileName, totalTime.count(), comparisons, numExchanges); // Salva os dados no arquivo txt
     }
 }
 
@@ -687,10 +706,12 @@ void InsertionSort(int List[], int size, long long int *comparisons, unsigned lo
 
             List[j + 1] = List[j];
             j--;
+
+            (*numExchanges)++;
         }
         List[j + 1] = key;
 
-        (*numExchanges)++;
+        
     }
 }
 
@@ -722,6 +743,7 @@ void QuickSort(int List[], int left, int right, long long int *comparisons, unsi
     (*comparisons)++;
     if (left < j)
         QuickSort(List, left, j, comparisons, numExchanges);
+    (*comparisons)++;
     if (i < right)
         QuickSort(List, i, right, comparisons, numExchanges);
 }
