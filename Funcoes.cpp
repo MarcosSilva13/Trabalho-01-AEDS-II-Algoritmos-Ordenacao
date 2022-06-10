@@ -211,7 +211,7 @@ void SaveData(string methodName, string fileName, double totalTime, long long in
 {
     ofstream arqOutput; // Variável para criar o arquivo
 
-    arqOutput.open(methodName, ios::app); // Recebe a variável com o nome do metodo e o modo de abertura
+    arqOutput.open(methodName + ".txt", ios::app); // Recebe a variável com o nome do metodo e o modo de abertura
                                           // ios::app grava a partir do fim do arquivo
     if (arqOutput.fail())
     {
