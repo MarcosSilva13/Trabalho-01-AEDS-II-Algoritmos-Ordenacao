@@ -1,4 +1,4 @@
-# Trabalho Prático - Algoritmos de Ordenacao
+# Trabalho Prático - Algoritmos de Ordenação
 <h3> Trabalho que tem como objetivo principal fazer um estudo comparativo entre os métodos de ordenação: </br>
 🔹 Bubble Sort </br>
 🔹 Shell Sort </br>
